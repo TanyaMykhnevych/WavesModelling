@@ -1,0 +1,59 @@
+.mat-form-field{
+    margin: 0 1.5rem 0 0;
+    &.mat-full-width{
+        margin: 0;
+        width: 100%;
+    }
+}
+.mat-select{
+    text-transform: uppercase;
+}
+.mat-option{
+    text-transform: uppercase;
+}
+.mat-table{
+    .mat-row{
+        @include animate(background);
+        &.highlighted,
+        &:hover {
+            background: rgba($main-color, .3);
+        }
+    }
+}
+.mat-radio-group{
+    margin: 0 0 1.5rem;
+    display: block;
+    .mat-cell &{
+        margin: 0;
+    }
+}
+.mat-radio-button{
+    margin: 0 2rem 0 0;
+}
+button{
+    &.mat-button,
+    &.mat-flat-button,
+    &.mat-icon-button,
+    &.mat-stroked-button,
+    &.mat-raised-button{
+        border-radius: 4px;
+    }
+}
+.mat-form-field-appearance-legacy{
+    .mat-form-field-wrapper{
+        padding-bottom: 1rem;
+    }
+    .mat-form-field-underline{
+        bottom: 1rem;
+    }
+}
+mat-tooltip-component{
+    .mat-tooltip {
+        font-size: 1.2rem;
+        background: rgba($secondary-color, .9);
+        border-radius: 4px;
+    }
+}
+.mat-drawer-backdrop.mat-drawer-shown{
+    background-color: transparent;
+}

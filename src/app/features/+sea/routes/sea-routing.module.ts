@@ -4,7 +4,7 @@ import { routes } from './sea.routes';
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes),
+        RouterModule.forChild(routes),
     ],
 })
 export class SeaRoutingModule { }

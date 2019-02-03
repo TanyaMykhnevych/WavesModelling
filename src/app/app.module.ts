@@ -5,6 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SeaModule } from './features/+sea/sea.module';
 import { HomeModule } from './features/+home/home.module';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { DashboardModule } from './features/+dashboard/dashboard.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -12,11 +17,16 @@ import { HomeModule } from './features/+home/home.module';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
+    HttpClientModule,
     AppRoutingModule,
+    DashboardModule,
+    BrowserAnimationsModule,
+    LayoutModule,
     SeaModule.forRoot(),
     HomeModule,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

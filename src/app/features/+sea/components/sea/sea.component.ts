@@ -18,9 +18,10 @@ export class SeaComponent implements AfterViewInit {
   public canvasData: ImageData;
   public sea: ISea = DEFAULT_SEA;
   public o: any;
-  public handler: Handler = Handler.Oscil;
   public timerId;
+  public playPauseIcon: string = 'play_arrow';
   private _options: IOptions = DEFAULT_SEA_OPTIONS;
+  public _handler: Handler;
 
   public constructor(
     private _seaOperationsService: SeaOperationsService,
@@ -29,16 +30,24 @@ export class SeaComponent implements AfterViewInit {
 
   public ngOnInit(): void {
     this._initSea();
-    this._seaOperationsService.sea = this.sea;
   }
 
   @Input() public set options(options: IOptions) {
+    this._seaOperationsService.sea = this.sea;
     this._options = options;
-    this.ngOnInit();
+    this._initSea();
   }
 
   public get options() {
     return this._options;
+  }
+
+  @Input() public set handler(handler: Handler) {
+    this._handler = handler;
+  }
+
+  public get handler() {
+    return this._handler;
   }
 
   public get context1d(): CanvasRenderingContext2D {
@@ -54,11 +63,19 @@ export class SeaComponent implements AfterViewInit {
     this.draw();
   }
 
+  public clear(): void {
+    this._seaOperationsService.clearSea();
+    this._initSea();
+    this.context2d.clearRect(0, 0, this.options.N, this.options.N);    
+    this.canvasData = this.context2d.getImageData(0, 0, this.options.N, this.options.N);
+    this.draw();
+  }
+
   public play(): void {
     if (this.timerId) {
-      clearInterval(this.timerId);
-      this.timerId = null;
+      this._stop();
     } else {
+      this.playPauseIcon = 'pause';
       this.timerId = setInterval(() => {
         this._seaOperationsService.step(this.options);
         this.draw();
@@ -67,7 +84,7 @@ export class SeaComponent implements AfterViewInit {
   }
 
   public onMouseDown(event: MouseEvent): void {
-    switch (this.handler) {
+    switch (this._handler) {
       case Handler.Line: {
         this.o = { type: "line", c0: event.offsetX, r0: event.offsetY, width: 1/*optz.lineIsleWidth*/ };
         break;
@@ -94,7 +111,7 @@ export class SeaComponent implements AfterViewInit {
   }
 
   public onMouseUp(event: MouseEvent): void {
-    switch (this.handler) {
+    switch (this._handler) {
       case Handler.Line: {
         let isle = this.o;
         if (isle) {
@@ -133,7 +150,7 @@ export class SeaComponent implements AfterViewInit {
   }
 
   public onMouseMove(event: MouseEvent): void {
-    switch (this.handler) {
+    switch (this._handler) {
       case Handler.Line: {
         if (this.o) {
           this.o.c = event.offsetX;
@@ -183,14 +200,12 @@ export class SeaComponent implements AfterViewInit {
   }
 
   private _initSea(): void {
-    for (let r = 0; r < this.options.N; r++) {
-      let row = [];
-      for (let c = 0; c < this.options.N; c++) {
-        row.push({ x: 0, f: 0, v: 0, free: 1 });
-      }
-      this.sea.water.push(row);
-    }
-    this.sea.point = { row: 0, column: 0 };
-    this.sea.n = this.options.N;
+    this._seaOperationsService.initSea(this.options);
+  }
+
+  private _stop(): void {
+    clearInterval(this.timerId);
+    this.timerId = null;
+    this.playPauseIcon = 'play_arrow';
   }
 }

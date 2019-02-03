@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Subscription, merge } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { IOptions } from '../../models/options';
 import { DEFAULT_SEA_OPTIONS } from '../../constants/sea.constant';
@@ -24,11 +24,11 @@ export class SeaOptionsComponent implements OnInit {
 
     public ngOnInit(): void {
         this.form = this._builder.group({
-            d: new FormControl(this.options.D, [Validators.required]),
-            n: new FormControl(this.options.N),
-            omega: new FormControl(this.options.OMEGA),
-            w: new FormControl(this.options.W),
-            r: new FormControl(this.options.R),
+            D: new FormControl(this.options.D, [Validators.required]),
+            N: new FormControl(this.options.N),
+            OMEGA: new FormControl(this.options.OMEGA),
+            W: new FormControl(this.options.W),
+            R: new FormControl(this.options.R),
         });
 
         const valueChangesSubscription = this.form.valueChanges.subscribe((value: IOptions) => {

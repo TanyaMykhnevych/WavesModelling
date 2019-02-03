@@ -1,70 +1,12 @@
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <div>
-                <button id="resetButton" type="button" class="btn btn-danger btn-sm" title="Clear">C</button>
-                <button id="optsButton" type="button" class="btn btn-info btn-sm" title="Options">۞</button>
-                <label><input id="kvisRange" type="range" step="1" min="1" max="30" value="9" title=" Kvis = 2**n " /></label>
-
-                <div class="btn-group btn-group-sm" role="group">
-                    <label class="btn btn-primary active">
-                        <input id="oscillatorsButton" type="radio" name="optradio" checked>Oscil</label>
-                    <label class="btn btn-primary">
-                        <input id="rectButton" type="radio" name="optradio">Rect</label>
-                    <label class="btn btn-primary">
-                        <input id="lineButton" type="radio" name="optradio">Line</label>
-                    <label class="btn btn-primary">
-                        <input id="meterButton" type="radio" name="optradio">Meter</label>
-                </div>
-
-                <button type="button" class="btn btn-success btn-sm" id="playPauseButton" title="Play/Pause" (click)="play()">■</button>
-            </div>
-
-        </div>
-
-        <div class="col">
-            <div>
-                <label>&nbsp;Cam
-                    <input id="cameraRange" type="range" step="0.01" min="-1.57" max="0" value="0" /></label>
-                <label>&nbsp;Light
-                    <input id="lightRange" type="range" step="0.1" min="-5" max="5" value="-2" /></label>
-                <span id="info" style="margin-left: 20px"></span>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <label><textarea id="optsArea"></textarea></label>
-        </div>
-        <div class="col">
-            <label><textarea id="helpArea">
-D - размер треугольника для 3d отображения (1,2,3,4,5)
-N - сторона квадрата модели (должна быть кратна D)
-W - коэффициент поглощения среды (0.0 < W <= 1.0)
-R - =1 отражение от границ, =0 - поглощение границами
-OMEGA - частота нового осциллятора (от 0.001 до 0.1)
-_3d - трехмерное отображение
-_1d - одномерное отображение
-
-КЛАВИШИ:
-   s - step - один шаг модели
-   any (в режиме Oscil) - замер мощности в точке курсора мыши
-
-          </textarea></label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div style="position: relative">
-                <canvas #canvas2d id="canvas2d" width="{{options.N}}" height="{{options.N}}" (mousedown)="onMouseDown($event)"
-                    (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)"></canvas>
-                <canvas #canvas1d id="canvas1d" width="{{options.N}}" height="{{options.N}}" (mousedown)="onMouseDown($event)"
-                    (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)"></canvas>
-                <!-- <canvas #canvas1d id="canvas1d"></canvas> -->
-            </div>
-        </div>
-        <div class="col" id="owner3d">
-            <canvas id="canvas3d"></canvas>
-        </div>
+    <button class="action-btn" mat-raised-button color="warn" title="Clear" (click)="clear()">C</button>
+    <button class="action-btn" mat-raised-button color="accent" title="Play/Pause" (click)="play()">
+        <mat-icon>{{playPauseIcon}}</mat-icon>
+    </button>
+    <div class="sea">
+        <canvas #canvas2d id="canvas2d" width="{{options.N}}" height="{{options.N}}" (mousedown)="onMouseDown($event)"
+            (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)"></canvas>
+        <canvas #canvas1d id="canvas1d" width="{{options.N}}" height="{{options.N}}" (mousedown)="onMouseDown($event)"
+            (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)"></canvas>
     </div>
 </div>

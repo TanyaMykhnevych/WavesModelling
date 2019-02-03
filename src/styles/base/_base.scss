@@ -1,0 +1,56 @@
+html {
+  font-size: 10px;
+	box-sizing: border-box;
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+body {
+  @include font-smoothing(on);
+  color: $black;
+  background: $white;
+  font: normal $base-font-size $font-family-regular;
+  line-height: 1.3;
+  margin: 0;
+}
+
+// adaptive images
+img{
+    max-width: 100%;
+    height: auto;
+    vertical-align: top;
+}
+
+// google map fix
+.gm-style img {max-width: none;}
+
+// hide tel links on desktop
+@media only screen and (min-width: 1025px) {
+    a[href^="tel"], a[href^="skype"], a[href^="sms"] {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+@for $i from 1 through 100 {
+  .w-#{$i} {
+    width: $i + 0%;
+  }
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}

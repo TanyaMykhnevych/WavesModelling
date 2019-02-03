@@ -3,7 +3,7 @@ import { SeaWavesComponent } from '../containers/sea-waves.component';
 
 export const routes: Route[] = [
     {
-        path: 'sea',
+        path: '',
         component: SeaWavesComponent,
     },
 ];

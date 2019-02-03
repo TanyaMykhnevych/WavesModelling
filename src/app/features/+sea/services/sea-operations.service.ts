@@ -108,6 +108,25 @@ export class SeaOperationsService {
         }
     }
 
+    public initSea(options: IOptions): void {
+        for (let r = 0; r < options.N; r++) {
+            let row = [];
+            for (let c = 0; c < options.N; c++) {
+                row.push({ x: 0, f: 0, v: 0, free: 1 });
+            }
+            this._sea.water.push(row);
+        }
+        this._sea.point = { row: 0, column: 0 };
+        this._sea.n = options.N;
+    }
+
+    public clearSea(): void {
+        this._sea.chronos = -1;
+        this.sea.water = [];
+        this.sea.oscillators = [];
+        this.sea.isles = [];
+    }
+
     // замер плотности энергии в области {c0, r0, w, h}
     public energyDensity(o): any {
         let e = 0, n = 0;

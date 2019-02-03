@@ -1,0 +1,8 @@
+<div class="expansion-menu" [class.active]="opened">
+    <strong class="expansion-menu-title" (click)="toggle()">
+        <span class="label">{{ title }}</span>
+    </strong>
+    <div class="dashboard-sidebar-section-list">
+        <ng-content select="[app-expansion-menu-item]"></ng-content>
+    </div>
+</div>
