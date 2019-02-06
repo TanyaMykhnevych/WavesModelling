@@ -1,9 +1,12 @@
-<mat-toolbar color="primary" class="fixed-header">
+<mat-toolbar color="primary" class="fixed-header" id="wave">
     <mat-toolbar-row>
         <button type="button" class="burger-btn" [class.active]="drawer.opened" (click)="drawer.toggle()">
             <span></span>
         </button>
-        <div class="logo">Waves</div>
+        <div class="logo">
+            <img src="../../../../../assets/images/wave.png" width="35" height="35" alt="Waves">
+            Waves
+        </div>
         <button mat-stroked-button type="button" routerLink="/home">Logout</button>
     </mat-toolbar-row>
 </mat-toolbar>
@@ -13,7 +16,8 @@
         <app-expansion-menu title="Sea" [class.opened]="router.isActive('/dashboard/sea')">
             <div class="app-expansion-menu-item" app-expansion-menu-item>
                 <button class="menu-btn" routerLink="/dashboard/sea" queryParamsHandling="merge" [appLinkActive]="['mat-raised-button']">
-                    All</button>
+                    Main
+                </button>
             </div>
         </app-expansion-menu>
     </mat-sidenav>
