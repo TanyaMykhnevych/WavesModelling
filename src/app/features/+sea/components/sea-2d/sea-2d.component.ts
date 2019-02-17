@@ -1,26 +1,26 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Input, OnDestroy } from '@angular/core';
 import { SeaOperationsService } from '../../services/sea-operations.service';
 import { IOptions } from '../../models/options';
-import { DEFAULT_SEA_OPTIONS, DEFAULT_SEA } from '../../constants/sea.constant';
-import { ISea } from '../../models/sea';
+import { DEFAULT_SEA_2D_OPTIONS, DEFAULT_SEA } from '../../constants/sea.constant';
+import { ISea, ISea2D } from '../../models/sea';
 import { SeaDrawService } from '../../services/sea-draw.service';
 import { Handler } from '../../models/handlers.enum';
 
 @Component({
-  selector: 'app-sea',
-  templateUrl: './sea.component.html',
-  styleUrls: ['./sea.component.css']
+  selector: 'app-sea-2d',
+  templateUrl: './sea-2d.component.html',
+  styleUrls: ['./sea-2d.component.css']
 })
-export class SeaComponent implements AfterViewInit {
+export class Sea2DComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas2d') canvas2d: ElementRef;
   @ViewChild('canvas1d') canvas1d: ElementRef;
   public context: CanvasRenderingContext2D;
   public canvasData: ImageData;
-  public sea: ISea = DEFAULT_SEA;
+  public sea: ISea2D = DEFAULT_SEA;
   public o: any;
   public timerId;
   public playPauseIcon: string = 'play_arrow';
-  private _options: IOptions = DEFAULT_SEA_OPTIONS;
+  private _options: IOptions = DEFAULT_SEA_2D_OPTIONS;
   public _handler: Handler;
 
   public constructor(
@@ -63,10 +63,14 @@ export class SeaComponent implements AfterViewInit {
     this.draw();
   }
 
+  public ngOnDestroy(): void {
+    this._stop();
+  }
+  
   public clear(): void {
     this._seaOperationsService.clearSea();
     this._initSea();
-    this.context2d.clearRect(0, 0, this.options.N, this.options.N);    
+    this.context2d.clearRect(0, 0, this.options.N, this.options.N);
     this.canvasData = this.context2d.getImageData(0, 0, this.options.N, this.options.N);
     this.draw();
   }

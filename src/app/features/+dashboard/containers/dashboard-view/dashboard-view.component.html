@@ -13,10 +13,23 @@
 
 <mat-sidenav-container class="dashboard-view" [hasBackdrop]="false">
     <mat-sidenav #drawer [mode]="mobileQuery.matches ? 'push' : 'side'" class="dashboard-sidebar">
-        <app-expansion-menu title="Sea" [class.opened]="router.isActive('/dashboard/sea')">
+        <app-expansion-menu title="Sea" [opened]="router.isActive('/dashboard/sea')">
             <div class="app-expansion-menu-item" app-expansion-menu-item>
-                <button class="menu-btn" routerLink="/dashboard/sea" queryParamsHandling="merge" [appLinkActive]="['mat-raised-button']">
-                    Main
+                <button class="menu-btn" routerLink="/dashboard/sea/1d" queryParamsHandling="merge"
+                    [appLinkActive]="['mat-raised-button']">
+                    1D
+                </button>
+            </div>
+            <div class="app-expansion-menu-item" app-expansion-menu-item>
+                <button class="menu-btn" routerLink="/dashboard/sea/2d" queryParamsHandling="merge"
+                    [appLinkActive]="['mat-raised-button']">
+                    2D
+                </button>
+            </div>
+            <div class="app-expansion-menu-item" app-expansion-menu-item>
+                <button class="menu-btn" routerLink="/dashboard/sea/3d" queryParamsHandling="merge"
+                    [appLinkActive]="['mat-raised-button']">
+                    3D
                 </button>
             </div>
         </app-expansion-menu>

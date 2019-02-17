@@ -1,0 +1,9 @@
+<div class="container">
+    <button class="action-btn" mat-raised-button color="warn" title="Clear" (click)="clear()">C</button>
+    <button class="action-btn" mat-raised-button color="accent" title="Play/Pause" (click)="play()">
+        <mat-icon>{{playPauseIcon}}</mat-icon>
+    </button>
+    <div class="sea">
+        <canvas #canvas1dsea id="canvas1" width="{{options.N}}" height="{{options.N}}"></canvas>
+    </div>
+</div>

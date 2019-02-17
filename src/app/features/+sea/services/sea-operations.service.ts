@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { ISea } from '../models/sea';
-import { IOscillator } from '../models/oscillator';
+import { ISea2D } from '../models/sea';
 import { IOptions } from '../models/options';
+import { IOscillator2D } from '../models/oscillator-2d';
 
 @Injectable()
 export class SeaOperationsService {
 
     constructor() { }
 
-    private _sea: ISea;
+    private _sea: ISea2D;
 
     public get sea() {
         return this._sea;
     }
 
-    public set sea(sea: ISea) {
+    public set sea(sea: ISea2D) {
         this._sea = sea;
     }
 
@@ -25,7 +25,7 @@ export class SeaOperationsService {
             omega: omega,
             amplitude: ampl,
             sea: this.sea
-        } as IOscillator;
+        } as IOscillator2D;
 
         this._sea.oscillators.push(osc);
     }
@@ -108,7 +108,8 @@ export class SeaOperationsService {
         }
     }
 
-    public initSea(options: IOptions): void {
+    public initSea(options: IOptions): void {  
+        this.clearSea();
         for (let r = 0; r < options.N; r++) {
             let row = [];
             for (let c = 0; c < options.N; c++) {

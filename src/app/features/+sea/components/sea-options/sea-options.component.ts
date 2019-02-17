@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { IOptions } from '../../models/options';
-import { DEFAULT_SEA_OPTIONS } from '../../constants/sea.constant';
+import { DEFAULT_SEA_2D_OPTIONS } from '../../constants/sea.constant';
 
 @Component({
     selector: 'app-sea-options',
@@ -32,7 +32,7 @@ export class SeaOptionsComponent implements OnInit {
         });
 
         const valueChangesSubscription = this.form.valueChanges.subscribe((value: IOptions) => {
-            value.N = DEFAULT_SEA_OPTIONS.N;
+            value.N = DEFAULT_SEA_2D_OPTIONS.N;
             this.valueChanges.emit(value);
         });
 

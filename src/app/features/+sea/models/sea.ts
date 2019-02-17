@@ -1,32 +1,24 @@
 import { IOscillator } from './oscillator';
 import { IPoint } from './point';
+import { IOscillator2D } from './oscillator-2d';
+import { IOscillator1D } from './oscillator-1d';
 
 export interface ISea {
-
     chronos?: number,
     n?: number,
     oscillators?: IOscillator[],
+}
+
+export interface ISea2D extends ISea {
+    oscillators?: IOscillator2D[],
     isles?: any[],
     water?: IPoint[][],
     point?: IPoint,
+}
 
-
-
-
-    // constructor(n) {
-    //     this.chronos = -1;
-    //     this.n = n;
-    //     this.oscs = [];
-    //     this.isles = [];
-    //     // water
-    //     this.w = [];
-    //     for (let r = 0; r < n; r++) {
-    //         let row = [];
-    //         for (let c = 0; c < n; c++) {
-    //             row.push({x: 0, f: 0, v: 0, free: 1});
-    //         }
-    //         this.w.push(row);
-    //     }
-    //     this.point = {r: 0, c: 0};
-    // }
+export interface ISea1D extends ISea {
+    oscillators?: IOscillator1D[],
+    isles?: any[],
+    water?: IPoint[],
+    point?: IPoint,
 }

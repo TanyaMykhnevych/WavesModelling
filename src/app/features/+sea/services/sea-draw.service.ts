@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ISea } from '../models/sea';
+import { ISea2D } from '../models/sea';
 import { IOptions } from '../models/options';
 
 @Injectable()
@@ -7,7 +7,7 @@ export class SeaDrawService {
 
     constructor() { }
 
-    public draw(sea: ISea, options: IOptions, canvasData: ImageData): void {
+    public draw(sea: ISea2D, options: IOptions, canvasData: ImageData): void {
         const ROCK_COLOR = 160; // 0xa0
 
         for (let r = 0; r < options.N; r++) {
@@ -47,7 +47,7 @@ export class SeaDrawService {
         }
     }
 
-    public draw1(sea: ISea, options: IOptions, context1d: CanvasRenderingContext2D): void {
+    public draw1(sea: ISea2D, options: IOptions, context1d: CanvasRenderingContext2D): void {
         let r = sea.point.row;
         let c = sea.point.column;
 
