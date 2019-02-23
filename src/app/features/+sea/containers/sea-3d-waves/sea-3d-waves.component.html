@@ -1,1 +1,5 @@
-3 D
+<div class="container">
+    <app-sea-options [options]="options" (valueChanges)="handleOptionsChanges($event)"></app-sea-options>
+    <app-sea-handler [handler]="handler" (valueChanges)="handleHandlerChanges($event)"></app-sea-handler>
+    <app-sea-3d [options]="options" [handler]="handler"></app-sea-3d>
+</div>
