@@ -25,14 +25,14 @@ export class SeaOptionsComponent implements OnInit {
     public ngOnInit(): void {
         this.form = this._builder.group({
             D: new FormControl(this.options.D, [Validators.required]),
-            N: new FormControl(this.options.N),
+            N: new FormControl({ value: this.options.N, disabled: true }),
             OMEGA: new FormControl(this.options.OMEGA),
             W: new FormControl(this.options.W),
             R: new FormControl(this.options.R),
+            kvisRange: new FormControl(this.options.kvisRange),
         });
 
         const valueChangesSubscription = this.form.valueChanges.subscribe((value: IOptions) => {
-            value.N = DEFAULT_SEA_2D_OPTIONS.N;
             this.valueChanges.emit(value);
         });
 

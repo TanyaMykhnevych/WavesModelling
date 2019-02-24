@@ -1,12 +1,22 @@
 <div class="container">
-    <button class="action-btn" mat-raised-button color="warn" title="Clear" (click)="clear()">C</button>
-    <button class="action-btn" mat-raised-button color="accent" title="Play/Pause" (click)="play()">
-        <mat-icon>{{playPauseIcon}}</mat-icon>
-    </button>
-    <div class="sea">
-        <canvas #canvas2d id="canvas2d" width="{{options.N}}" height="{{options.N}}" (mousedown)="onMouseDown($event)"
-            (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)"></canvas>
-        <canvas #canvas1d id="canvas1d" width="{{options.N}}" height="{{options.N}}" (mousedown)="onMouseDown($event)"
-            (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)"></canvas>
+    <div class="col">
+        <button class="action-btn" mat-raised-button color="warn" title="Clear" (click)="clear()">C</button>
+        <button class="action-btn" mat-raised-button color="accent" title="Play/Pause" (click)="play()">
+            <mat-icon>{{playPauseIcon}}</mat-icon>
+        </button>
+        <div class="sea">
+            <canvas #canvas2d id="canvas2d" width="{{options.N}}" height="{{options.N}}"
+                (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"
+                (mousemove)="onMouseMove($event)"></canvas>
+            <canvas #canvas1d id="canvas1d" width="{{options.N}}" height="{{options.N}}"
+                (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"
+                (mousemove)="onMouseMove($event)"></canvas>
+        </div>
+    </div>
+    <div class="col">
+        <app-sea3d-options (valueChanges)="handleSettings3DChanges($event)"></app-sea3d-options>
+        <div class="sea">
+            <canvas #canvas3d id="canvas3d" width="{{options.N}}" height="{{options.N}}"></canvas>
+        </div>
     </div>
 </div>

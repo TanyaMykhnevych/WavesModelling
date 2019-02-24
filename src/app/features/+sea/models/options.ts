@@ -7,6 +7,7 @@ export interface IOptions {
     _3d?: boolean,
     _1d?: boolean,
     W_ROCK?: number,
+    kvisRange?: number,
 }
 
 

@@ -1,7 +1,6 @@
 import { Route } from '@angular/router';
 import { Sea2DWavesComponent } from '../containers/sea-2d-waves/sea-2d-waves.component';
 import { Sea1DWavesComponent } from '../containers/sea-1d-waves/sea-1d-waves.component';
-import { Sea3DWavesComponent } from '../containers/sea-3d-waves/sea-3d-waves.component';
 
 export const routes: Route[] = [
     {
@@ -11,9 +10,5 @@ export const routes: Route[] = [
     {
         path: '1d',
         component: Sea1DWavesComponent,
-    },
-    {
-        path: '3d',
-        component: Sea3DWavesComponent,
     }
 ];

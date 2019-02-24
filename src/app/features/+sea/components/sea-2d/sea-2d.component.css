@@ -21,3 +21,10 @@
     top: 500;
     left: 500;
 }
+
+.col {
+    display: table-cell;
+    width: 50%;
+    padding: 10px;
+    margin: 10px;
+}

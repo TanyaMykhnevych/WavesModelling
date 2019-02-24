@@ -11,10 +11,9 @@ import { SeaHandlerComponent } from './components/sea-handler/sea-handler.compon
 import { CoreModule } from 'src/app/core/core.module';
 import { LayoutModule } from 'src/app/layout/app/layout.module';
 import { Sea1DWavesComponent } from './containers/sea-1d-waves/sea-1d-waves.component';
-import { Sea3DWavesComponent } from './containers/sea-3d-waves/sea-3d-waves.component';
 import { Sea1DComponent } from './components/sea-1d/sea-1d.component';
 import { Sea1DOperationsService } from './services/sea-1d-operations.service';
-import { Sea3DComponent } from './components/sea-3d/sea-3d.component';
+import { Sea3DOptionsComponent } from './components/sea3d-options/sea3d-options.component';
 
 
 @NgModule({
@@ -32,9 +31,8 @@ import { Sea3DComponent } from './components/sea-3d/sea-3d.component';
         SeaOptionsComponent,
         SeaHandlerComponent,
         Sea1DWavesComponent,
-        Sea3DWavesComponent,
         Sea1DComponent,
-        Sea3DComponent,
+        Sea3DOptionsComponent,
     ],
 })
 export class SeaModule {

@@ -21,8 +21,7 @@ export class SeaDrawService {
                     canvasData.data[idx + 3] = 255;  // alpha
                 } else {
                     // define alpha
-                    let color = sea.water[r][c].x * 2 ** 9 | 0;
-                    // let color = sea.water[r][c].x * optz.Kvis | 0;
+                    let color = sea.water[r][c].x * 2 ** options.kvisRange  | 0;
                     const maxColor = 127;
                     if (color > maxColor) color = maxColor;
                     if (color < -maxColor) color = -maxColor;
@@ -62,7 +61,7 @@ export class SeaDrawService {
         ctx.strokeStyle = 'red';
         ctx.beginPath();
         for (let c = 0; c < options.N; c++) {
-            let h = sea.water[r][c].x * 2 ** 9;
+            let h = sea.water[r][c].x * (2 ** options.kvisRange);
             ctx.moveTo(c, r);
             ctx.lineTo(c, r + 30 * h);
         }
