@@ -11,7 +11,7 @@ export const DEFAULT_SEA_2D_OPTIONS: IOptions = {
     _3d: false,
     _1d: false,
     W_ROCK: 1,
-    kvisRange: 20
+    kvisRange: 9
 }
 
 export const DEFAULT_SEA_3D_OPTIONS: IOptions3D = {

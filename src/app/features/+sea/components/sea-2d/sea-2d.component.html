@@ -1,9 +1,11 @@
 <div class="container">
+    <button class="action-btn" mat-raised-button color="warn" title="Clear" (click)="clear()">C</button>
+    <button class="action-btn" mat-raised-button color="accent" title="Play/Pause" (click)="play()">
+        <mat-icon>{{playPauseIcon}}</mat-icon>
+    </button>
     <div class="col">
-        <button class="action-btn" mat-raised-button color="warn" title="Clear" (click)="clear()">C</button>
-        <button class="action-btn" mat-raised-button color="accent" title="Play/Pause" (click)="play()">
-            <mat-icon>{{playPauseIcon}}</mat-icon>
-        </button>
+        <label>Kvis</label>
+        <mat-slider [(ngModel)]="options.kvisRange" step="1" min="1" max="30"></mat-slider>
         <div class="sea">
             <canvas #canvas2d id="canvas2d" width="{{options.N}}" height="{{options.N}}"
                 (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"
@@ -18,5 +20,10 @@
         <div class="sea">
             <canvas #canvas3d id="canvas3d" width="{{options.N}}" height="{{options.N}}"></canvas>
         </div>
+    </div>
+</div>
+<div class="container">
+    <div *ngIf="energy">
+        <h2>Energy:</h2> {{energy}}
     </div>
 </div>

@@ -1,13 +1,14 @@
 import { Component, ViewChild, ElementRef, AfterViewInit, Input, OnDestroy } from '@angular/core';
-import { SeaOperationsService } from '../../services/sea-operations.service';
+import { Sea2DOperationsService } from '../../services/sea-2d-operations.service';
 import { IOptions } from '../../models/options';
-import { DEFAULT_SEA_2D_OPTIONS, DEFAULT_SEA, DEFAULT_3D_SETTINGS } from '../../constants/sea.constant';
+import { DEFAULT_SEA_2D_OPTIONS, DEFAULT_SEA, DEFAULT_3D_SETTINGS, DEFAULT_SEA_3D_OPTIONS } from '../../constants/sea.constant';
 import { ISea2D } from '../../models/sea';
 import { SeaDrawService } from '../../services/sea-draw.service';
 import { Handler } from '../../models/handlers.enum';
-import * as THREE from 'three';
 import { IOptions3D } from '../../models/options3D';
 import { ISettings3D } from '../../models/settings3D';
+import { Sea3DOperationsService } from '../../services/sea-3d-operations.service';
+import { IDisplay3DParameters } from '../../models/display-3d-parameters';
 
 @Component({
   selector: 'app-sea-2d',
@@ -15,8 +16,9 @@ import { ISettings3D } from '../../models/settings3D';
   styleUrls: ['./sea-2d.component.css']
 })
 export class Sea2DComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('canvas2d') canvas2d: ElementRef;
   @ViewChild('canvas1d') canvas1d: ElementRef;
+  @ViewChild('canvas2d') canvas2d: ElementRef;
+  @ViewChild('canvas3d') canvas3d: ElementRef;
   public context: CanvasRenderingContext2D;
   public canvasData: ImageData;
   public sea: ISea2D = DEFAULT_SEA;
@@ -24,28 +26,17 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
   public timerId;
   public playPauseIcon: string = 'play_arrow';
   public _handler: Handler;
-
-  @ViewChild('canvas3d') canvas3d: ElementRef;
-
-  public camera: THREE.OrthographicCamera;
-  public scene: THREE.Scene;
-  public light: THREE.DirectionalLight;
-  public geometry: THREE.BufferGeometry;
-  public renderer: THREE.WebGLRenderer;
+  public display3DParams: IDisplay3DParameters = {};
+  public energy: number;
 
   private _settings3D: ISettings3D = DEFAULT_3D_SETTINGS;
   private _options: IOptions = DEFAULT_SEA_2D_OPTIONS;
-  private _optionsZ: IOptions3D = {
-    cameraY: 0,
-    cameraZ: this.options.N * Math.cos(this._settings3D.cameraRange),
-    lightX: this._settings3D.lightRange * this.options.N / 2,
-    lineIsleWidth: 1,
-    meterRadius: 20,
-  };
+  private _optionsZ: IOptions3D = DEFAULT_SEA_3D_OPTIONS;
 
   public constructor(
-    private _seaOperationsService: SeaOperationsService,
+    private _sea2DOperationsService: Sea2DOperationsService,
     private _seaDrawService: SeaDrawService,
+    private _sea3DOperationsService: Sea3DOperationsService,
   ) { }
 
   public ngOnInit(): void {
@@ -54,24 +45,18 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
   }
 
   @Input() public set options(options: IOptions) {
-    this._seaOperationsService.sea = this.sea;
-    this._options = options;
-    this._initSea();
-    // this.draw();
-    // this._draw3D();
+    this._sea2DOperationsService.sea = this.sea;
+    Object.assign(this._options, options);
+    this.clear();
   }
 
-  public get options() {
-    return this._options;
-  }
+  public get options() { return this._options; }
 
   @Input() public set handler(handler: Handler) {
     this._handler = handler;
   }
 
-  public get handler() {
-    return this._handler;
-  }
+  public get handler() { return this._handler; }
 
   public get context1d(): CanvasRenderingContext2D {
     return (<HTMLCanvasElement>this.canvas1d.nativeElement).getContext('2d');
@@ -92,11 +77,13 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
   }
 
   public clear(): void {
-    this._seaOperationsService.clearSea();
+    this._sea2DOperationsService.clearSea();
     this._initSea();
+    this._init3DSea();
     this.context2d.clearRect(0, 0, this.options.N, this.options.N);
     this.canvasData = this.context2d.getImageData(0, 0, this.options.N, this.options.N);
     this.draw();
+    this._draw3D();
   }
 
   public play(): void {
@@ -105,7 +92,7 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
     } else {
       this.playPauseIcon = 'pause';
       this.timerId = setInterval(() => {
-        this._seaOperationsService.step(this.options);
+        this._sea2DOperationsService.step(this.options);
         this.draw();
         this._draw3D();
       }, 50);
@@ -115,14 +102,14 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
   public onMouseDown(event: MouseEvent): void {
     switch (this._handler) {
       case Handler.Line: {
-        this.o = { type: "line", c0: event.offsetX, r0: event.offsetY, width: 1/*optz.lineIsleWidth*/ };
+        this.o = { type: "line", c0: event.offsetX, r0: event.offsetY, width: this._optionsZ.lineIsleWidth };
         break;
       }
       case Handler.Oscil: {
         let c = event.offsetX;
         let r = event.offsetY;
         if (this.sea.water[r][c].free) {
-          this._seaOperationsService.addOscillator(r, c, this.options.OMEGA, 1);
+          this._sea2DOperationsService.addOscillator(r, c, this.options.OMEGA, 1);
         }
         this.draw();
         break;
@@ -132,6 +119,7 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
         break;
       }
       case Handler.Meter: {
+        this.o = { c0: event.offsetX, r0: event.offsetY, w: 0, h: 0 };
         break;
       }
       default:
@@ -149,7 +137,7 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
             [isle.r, isle.r0] = [isle.r0, isle.r];
           }
           let canvasData = this.context1d.getImageData(0, 0, this.options.N, this.options.N);
-          this._seaOperationsService.getRocksFromCanvasData(canvasData);
+          this._sea2DOperationsService.getRocksFromCanvasData(canvasData);
           this.sea.isles.push(isle);
           this.draw();
           this._addIsle3D(isle);
@@ -163,7 +151,7 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
       case Handler.Rect: {
         if (this.o) {
           let canvasData = this.context1d.getImageData(0, 0, this.options.N, this.options.N);
-          this._seaOperationsService.getRocksFromCanvasData(canvasData);
+          this._sea2DOperationsService.getRocksFromCanvasData(canvasData);
           this.sea.isles.push(this.o);
           this.draw();
           this._addIsle3D(this.o);
@@ -175,6 +163,13 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
         break;
       }
       case Handler.Meter: {
+        if (this.o) {
+          this.energy = this._sea2DOperationsService.energyDensity(this.o);
+
+          let ctx = this.context1d;
+          ctx.clearRect(0, 0, this.options.N, this.options.N);
+          this.o = null;
+        }
         break;
       }
       default:
@@ -214,6 +209,15 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
         break;
       }
       case Handler.Meter: {
+        if (this.o) {
+          this.o.w = event.offsetX - this.o.c0;
+          this.o.h = event.offsetY - this.o.r0;
+
+          let ctx = this.context1d;
+          ctx.fillStyle = "gray";
+          ctx.clearRect(0, 0, this.options.N, this.options.N);
+          ctx.fillRect(this.o.c0, this.o.r0, this.o.w, this.o.h);
+        }
         break;
       }
       default:
@@ -240,7 +244,7 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
   }
 
   private _initSea(): void {
-    this._seaOperationsService.initSea(this.options);
+    this._sea2DOperationsService.initSea(this.options);
   }
 
   private _stop(): void {
@@ -249,140 +253,19 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
     this.playPauseIcon = 'play_arrow';
   }
 
-  private _initVertices3D(): Float32Array {
-    let d = this.options.D;
-    let v = [];
-    for (let r = 0; r < this.options.N - d; r += d) {
-      for (let c = 0; c < this.options.N - d; c += d) {
-        // 1
-        v.push(c);
-        v.push(r);
-        v.push(0);
-        // 2
-        v.push(c + d);
-        v.push(r);
-        v.push(0);
-        // 3
-        v.push(c);
-        v.push(r + d);
-        v.push(0);
-
-        //3
-        v.push(c);
-        v.push(r + d);
-        v.push(0);
-        // 2
-        v.push(c + d);
-        v.push(r);
-        v.push(0);
-        // 4
-        v.push(c + d);
-        v.push(r + d);
-        v.push(0);
-      }
-    }
-    return new Float32Array(v);
-  }
-
   private _draw3D(): void {
-    let amp = 2 * this.options.kvisRange;
-
-    const optz = this._optionsZ;
-
-    let half = this.options.N / 2 | 0;
-    this.camera.position.set(half, half + optz.cameraY, optz.cameraZ);
-    this.camera.lookAt(half, half, 0);
-
-    this.light.position.set(optz.lightX, half, this.options.N);
-
-    let v = this.geometry.getAttribute('position').array;
-    let d = this.options.D;
-    let i = 0;
-    for (let r_ = 0; r_ < this.options.N - d; r_ += d) {
-      let r = this.options.N - d - r_;
-      for (let c = 0; c < this.options.N - d; c += d) {
-        // 1
-        v[i] = c;
-        v[i+1] = r_;
-        v[i + 2] = this.sea.water[r][c].x * amp;
-        // 2
-        v[i+3] = c+d;
-        v[i+4] = r_;
-        v[i + 5] = this.sea.water[r - d][c].x * amp;
-        // 3
-        v[i+6] = c;
-        v[i+7] = r_+d;
-        v[i + 8] = this.sea.water[r][c + d].x * amp;
-        // 3
-        v[i+9] = c;
-        v[i+10] = r_+d;
-        v[i + 11] = this.sea.water[r][c + d].x * amp;
-        // 2
-        v[i+12] = c+d;
-        v[i+13] = r_;
-        v[i + 14] = this.sea.water[r - d][c].x * amp;
-        // 4
-        v[i+15] = c+d;
-        v[i+16] = r_+d;
-        v[i + 17] = this.sea.water[r - d][c + d].x * amp;
-        i += 18;
-      }
-    }
-    this.geometry.getAttribute('position').needsUpdate = true;
-    this.geometry.computeVertexNormals();
-    this.renderer.render(this.scene, this.camera);
+    this._seaDrawService.draw3D(this.sea, this.options, this._optionsZ, this.display3DParams);
   }
-
 
   private _init3DSea(): void {
-    this.camera = new THREE.OrthographicCamera(-this.options.N / 2, this.options.N / 2, this.options.N / 2, -this.options.N / 2, 1, 1000);
+    this._sea3DOperationsService.init3DSea(this.options, this.display3DParams, this.canvas3d)
 
-    this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xbfd1e5);
-
-    this.light = new THREE.DirectionalLight(0xffffff, 1.1);
-    this.light.castShadow = true;
-    this.scene.add(this.light); this.geometry = new THREE.BufferGeometry();
-
-    let attr = new THREE.BufferAttribute(this._initVertices3D(), 3);
-    attr.dytamic = true;
-
-    this.geometry.addAttribute('position', attr);
-
-    let seaMaterial = new THREE.MeshPhongMaterial({ color: 0x00FFFF });
-    let seaMesh = new THREE.Mesh(this.geometry, seaMaterial);
-    seaMesh.receiveShadow = true;
-    seaMesh.castShadow = true;
-    this.scene.add(seaMesh);
-
-    // renderer
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas3d.nativeElement });
-    this.renderer.setSize(this.options.N, this.options.N);
-    this.renderer.shadowMap.enabled = true;
+    this._optionsZ.cameraZ = this.options.N * Math.cos(this._settings3D.cameraRange);
+    this._optionsZ.lightX = this._settings3D.lightRange * this.options.N / 2;
   }
 
   private _addIsle3D(isle): void {
-    let isleMaterial = new THREE.MeshPhongMaterial({ color: 0x00a000 });
-    let mesh = null;
-
-    if (isle.type === 'rect') {
-      let geometry = new THREE.BoxGeometry(isle.w, isle.h, 4);
-      mesh = new THREE.Mesh(geometry, isleMaterial);
-      mesh.position.x = isle.c0 + isle.w / 2;
-      mesh.position.y = this.options.N - isle.r0 - isle.h / 2;
-
-    } else if (isle.type === 'line') {
-      let hypot = Math.hypot(isle.r - isle.r0, isle.c - isle.c0);
-      let geometry = new THREE.BoxGeometry(hypot, isle.width, 4);
-      mesh = new THREE.Mesh(geometry, isleMaterial);
-      mesh.position.x = (isle.c0 + isle.c) / 2;
-      mesh.position.y = this.options.N - (isle.r0 + isle.r) / 2;
-      let alpha = Math.atan2(isle.r - isle.r0, isle.c - isle.c0);
-      mesh.rotation.z = -alpha;
-    }
-
-    mesh.receiveShadow = true;
-    mesh.castShadow = true;
-    this.scene.add(mesh);
+    const mesh = this._sea3DOperationsService.getIsleMeshToAdd(isle, this.options);
+    this.display3DParams.scene.add(mesh);
   }
 }

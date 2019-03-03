@@ -1,8 +1,9 @@
 <form [formGroup]="form">
     <label>&nbsp;Camera
-        <input id="cameraRange" formControlName="cameraRange" type="range" step="0.01" min="-1.57" max="0" value="0" />
+        <mat-slider id="cameraRange" formControlName="cameraRange" step="0.01" min="-1.57" max="0" value="0">
+        </mat-slider>
     </label>
     <label>&nbsp;Light
-        <input id="lightRange" formControlName="lightRange" type="range" step="0.1" min="-5" max="5" value="-2" />
+        <mat-slider id="lightRange" formControlName="lightRange" step="0.1" min="-5" max="5" value="-2"></mat-slider>
     </label>
 </form>

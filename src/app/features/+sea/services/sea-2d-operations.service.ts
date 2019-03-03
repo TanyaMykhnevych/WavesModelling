@@ -4,7 +4,7 @@ import { IOptions } from '../models/options';
 import { IOscillator2D } from '../models/oscillator-2d';
 
 @Injectable()
-export class SeaOperationsService {
+export class Sea2DOperationsService {
 
     constructor() { }
 

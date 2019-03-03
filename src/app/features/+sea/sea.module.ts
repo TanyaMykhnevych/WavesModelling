@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SeaRoutingModule } from './routes/sea-routing.module';
 import { Sea2DComponent } from './components/sea-2d/sea-2d.component';
-import { SeaOperationsService } from './services/sea-operations.service';
+import { Sea2DOperationsService } from './services/sea-2d-operations.service';
 import { SeaDrawService } from './services/sea-draw.service';
 import { Sea2DWavesComponent } from './containers/sea-2d-waves/sea-2d-waves.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +14,8 @@ import { Sea1DWavesComponent } from './containers/sea-1d-waves/sea-1d-waves.comp
 import { Sea1DComponent } from './components/sea-1d/sea-1d.component';
 import { Sea1DOperationsService } from './services/sea-1d-operations.service';
 import { Sea3DOptionsComponent } from './components/sea3d-options/sea3d-options.component';
+import { Sea3DOperationsService } from './services/sea-3d-operations.service';
+import { OptionsTipComponent } from './components/options-tip/options-tip.component';
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import { Sea3DOptionsComponent } from './components/sea3d-options/sea3d-options.
         Sea1DWavesComponent,
         Sea1DComponent,
         Sea3DOptionsComponent,
+        OptionsTipComponent,
     ],
 })
 export class SeaModule {
@@ -40,7 +43,7 @@ export class SeaModule {
         return {
             ngModule: SeaModule,
             providers: [
-                SeaOperationsService, SeaDrawService, Sea1DOperationsService
+                Sea2DOperationsService, SeaDrawService, Sea1DOperationsService, Sea3DOperationsService
             ],
         };
     }

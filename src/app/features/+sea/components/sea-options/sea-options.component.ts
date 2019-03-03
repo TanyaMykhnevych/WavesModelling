@@ -2,7 +2,6 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { IOptions } from '../../models/options';
-import { DEFAULT_SEA_2D_OPTIONS } from '../../constants/sea.constant';
 
 @Component({
     selector: 'app-sea-options',
@@ -25,14 +24,18 @@ export class SeaOptionsComponent implements OnInit {
     public ngOnInit(): void {
         this.form = this._builder.group({
             D: new FormControl(this.options.D, [Validators.required]),
-            N: new FormControl({ value: this.options.N, disabled: true }),
+            N: new FormControl({ value: this.options.N, disabled: false }),
             OMEGA: new FormControl(this.options.OMEGA),
             W: new FormControl(this.options.W),
             R: new FormControl(this.options.R),
-            kvisRange: new FormControl(this.options.kvisRange),
         });
 
         const valueChangesSubscription = this.form.valueChanges.subscribe((value: IOptions) => {
+            if (value.N % value.D !== 0) {
+                this.form.controls.N.setErrors({ notMultiple: true });
+                this.form.controls.D.setErrors({ notMultiple: true });
+                return;
+            }
             this.valueChanges.emit(value);
         });
 
@@ -45,5 +48,14 @@ export class SeaOptionsComponent implements OnInit {
             .forEach(subscription => {
                 subscription.unsubscribe();
             });
+    }
+
+    public getErrorMessage(): string {
+        if (this.form.controls.D.hasError('notMultiple') && this.form.controls.N.hasError('notMultiple')) {
+            return 'N % D must be 0';
+        } else {
+            this.form.controls.D.setErrors(null);
+            this.form.controls.N.setErrors(null);
+        }
     }
 }
