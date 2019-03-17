@@ -1,0 +1,18 @@
+mat-form-field {
+    width: 100%;
+}
+
+.actions-footer {
+    margin-top: 5px;
+    float: right;
+}
+
+button {    
+    &.save {
+        background-color: forestgreen;
+        margin-right: 10px;
+    }
+    &.cancel {
+        background-color: orange;
+    }
+}

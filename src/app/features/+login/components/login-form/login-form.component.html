@@ -1,0 +1,11 @@
+<mat-card class="auth-form-card">
+    <form [formGroup]="form" (submit)="onSubmit($event)">
+        <mat-form-field>
+            <input type="email" matInput formControlName="email" placeholder="Email">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="password" matInput formControlName="password" placeholder="Password">
+        </mat-form-field>
+        <button class="auth-form-card-button" type="submit" color="primary" mat-flat-button>Login</button>
+    </form>
+</mat-card>

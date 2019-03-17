@@ -16,6 +16,8 @@ import { Sea1DOperationsService } from './services/sea-1d-operations.service';
 import { Sea3DOptionsComponent } from './components/sea3d-options/sea3d-options.component';
 import { Sea3DOperationsService } from './services/sea-3d-operations.service';
 import { OptionsTipComponent } from './components/options-tip/options-tip.component';
+import { SeaSaveDialogComponent } from './components/sea-save-dialog/sea-save-dialog.component';
+import { ProjectService } from './services/project/project.service';
 
 
 @NgModule({
@@ -36,14 +38,22 @@ import { OptionsTipComponent } from './components/options-tip/options-tip.compon
         Sea1DComponent,
         Sea3DOptionsComponent,
         OptionsTipComponent,
+        SeaSaveDialogComponent,
     ],
+    entryComponents: [
+        SeaSaveDialogComponent,
+    ]
 })
 export class SeaModule {
     public static forRoot(): ModuleWithProviders {
         return {
             ngModule: SeaModule,
             providers: [
-                Sea2DOperationsService, SeaDrawService, Sea1DOperationsService, Sea3DOperationsService
+                Sea2DOperationsService,
+                SeaDrawService,
+                Sea1DOperationsService,
+                Sea3DOperationsService,
+                ProjectService,
             ],
         };
     }

@@ -1,8 +1,8 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, Input, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Sea2DOperationsService } from '../../services/sea-2d-operations.service';
 import { IOptions } from '../../models/options';
 import { DEFAULT_SEA_2D_OPTIONS, DEFAULT_SEA, DEFAULT_3D_SETTINGS, DEFAULT_SEA_3D_OPTIONS } from '../../constants/sea.constant';
-import { ISea2D } from '../../models/sea';
+import { ISea2D, ISea } from '../../models/sea';
 import { SeaDrawService } from '../../services/sea-draw.service';
 import { Handler } from '../../models/handlers.enum';
 import { IOptions3D } from '../../models/options3D';
@@ -19,6 +19,9 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas1d') canvas1d: ElementRef;
   @ViewChild('canvas2d') canvas2d: ElementRef;
   @ViewChild('canvas3d') canvas3d: ElementRef;
+
+  @Output() public seaChanges: EventEmitter<ISea> = new EventEmitter<ISea>();
+
   public context: CanvasRenderingContext2D;
   public canvasData: ImageData;
   public sea: ISea2D = DEFAULT_SEA;
@@ -78,6 +81,7 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
 
   public clear(): void {
     this._sea2DOperationsService.clearSea();
+    this.seaChanges.emit(this.sea);
     this._initSea();
     this._init3DSea();
     this.context2d.clearRect(0, 0, this.options.N, this.options.N);
@@ -175,6 +179,7 @@ export class Sea2DComponent implements AfterViewInit, OnDestroy {
       default:
         break;
     }
+    this.seaChanges.emit(this.sea);
   }
 
   public onMouseMove(event: MouseEvent): void {

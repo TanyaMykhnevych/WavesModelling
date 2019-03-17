@@ -1,0 +1,21 @@
+<div class="confirm-popup">
+    <header class="confirm-popup-header no-title">
+    </header>
+    <div class="confirm-popup-content">
+        <span class="confirm-popup--timer" *ngIf="false">30</span>
+        <div class="confirm-popup--msg">
+            <p>Save new project</p>
+        </div>
+        <mat-form-field>
+            <input matInput [(ngModel)]="name" required placeholder="Name">
+          </mat-form-field>
+        <div class="actions-footer">
+            <button mat-raised-button class="save" (click)="save()">
+                Save
+            </button>
+            <button mat-raised-button class="cancel" (click)="close()">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>

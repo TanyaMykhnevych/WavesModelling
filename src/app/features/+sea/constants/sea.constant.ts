@@ -8,8 +8,6 @@ export const DEFAULT_SEA_2D_OPTIONS: IOptions = {
     OMEGA: Number((0.2 / (2 * Math.PI)).toFixed(4)),  // 0.2 < OMEGA < 0.8
     W: 1,
     R: 0,
-    _3d: false,
-    _1d: false,
     W_ROCK: 1,
     kvisRange: 9
 }

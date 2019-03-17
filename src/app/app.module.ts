@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DashboardModule } from './features/+dashboard/dashboard.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
+import { LoginModule } from './features/+login';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     LayoutModule,
     SeaModule.forRoot(),
     HomeModule,
+    LoginModule,
   ],
   bootstrap: [AppComponent]
 })
