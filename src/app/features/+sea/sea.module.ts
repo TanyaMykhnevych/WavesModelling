@@ -17,7 +17,7 @@ import { Sea3DOptionsComponent } from './components/sea3d-options/sea3d-options.
 import { Sea3DOperationsService } from './services/sea-3d-operations.service';
 import { OptionsTipComponent } from './components/options-tip/options-tip.component';
 import { SeaSaveDialogComponent } from './components/sea-save-dialog/sea-save-dialog.component';
-import { ProjectService } from './services/project/project.service';
+import { ProjectService } from '../+project/services/project.service';
 
 
 @NgModule({

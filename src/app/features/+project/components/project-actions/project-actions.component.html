@@ -1,0 +1,6 @@
+<button class="action-btn btn" mat-flat-button color="primary" (click)="navigateToProjectsCreation()">Create new
+    projects</button>
+<button class="action-btn btn" mat-flat-button [matMenuTriggerFor]="menu">Actions</button>
+<mat-menu #menu="matMenu" [overlapTrigger]="false">
+    <button class="menu-action" mat-menu-item>Deactivate</button>
+</mat-menu>

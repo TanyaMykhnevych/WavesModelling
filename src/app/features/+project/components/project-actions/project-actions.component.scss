@@ -1,0 +1,19 @@
+:host{
+    padding-top: 1rem;
+    display: block;
+    @media (max-width: 1023px){
+        padding: 0;
+    }
+}
+.menu-action{
+    font-size: 14px;
+}
+.btn{
+    margin: 0 1.5rem 0 0;
+    @media (max-width: 1023px){
+        width: 100%;
+        max-width: 18.5rem;
+        margin-bottom: 1.5rem;
+    }
+}
+

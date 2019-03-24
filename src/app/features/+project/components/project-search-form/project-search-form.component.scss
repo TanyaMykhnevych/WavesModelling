@@ -1,0 +1,35 @@
+.buttons-selects-holder{
+    display: flex;
+    @media (max-width: 1023px){
+        display: block;
+    }
+}
+.search-selects{
+    .mat-form-field{
+        @media (max-width: 1023px){
+            display: block;
+            margin: 0;
+        }
+    }
+}
+.actions-top{
+    display: flex;
+    margin: 0 0 1rem;
+    @media (max-width: 1199px){
+        display: block;
+    }
+    .buttons-selects-holder{
+        flex: 0 0 auto;
+    }
+    .search-holder{
+        flex-grow: 1;
+        margin: -0.1rem 0 0;
+        @media (max-width: 1199px){
+            width: 100%;
+            max-width: 67.7rem;
+        }
+        @media (max-width: 1023px){
+            max-width: none;
+        }
+    }
+}

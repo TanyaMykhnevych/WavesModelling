@@ -11,6 +11,7 @@ import { DashboardModule } from './features/+dashboard/dashboard.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LoginModule } from './features/+login';
+import { ProjectModule } from './features/+project/project.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { LoginModule } from './features/+login';
     SeaModule.forRoot(),
     HomeModule,
     LoginModule,
+    ProjectModule,
   ],
   bootstrap: [AppComponent]
 })

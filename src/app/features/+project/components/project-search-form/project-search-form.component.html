@@ -1,0 +1,15 @@
+<form [formGroup]="searchForm">
+    <div class="projects-body">
+        <div class="actions-top">
+            <div class="buttons-selects-holder">
+                <ng-content select="[buttons]"></ng-content>
+            </div>
+            <mat-form-field class="search-holder">
+                <input matInput type="search" id="searchBox" placeholder="Search by name" formControlName="searchTerm">
+            </mat-form-field>
+        </div>
+        <ng-content select=[table]></ng-content>
+        <mat-paginator #paginator [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[10, 15, 30]"
+            (page)="onPaginateChange($event)"></mat-paginator>
+    </div>
+</form>

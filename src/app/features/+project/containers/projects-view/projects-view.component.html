@@ -1,0 +1,12 @@
+<div class="wrap projects-page">
+  <div class="projects-search">
+    <app-project-search-form [totalCount]="totalCount" (valueChanges)="onSearch($event)" [totalCount]="totalCount"
+      [searchParameters]="searchParameters">
+
+      <app-project-actions buttons [projects]="selectedProjects" (reload)="reloadProjects()">
+      </app-project-actions>
+      <app-project-list table (selectProject)="updateSelectedProjects($event)" [projects]="projects">
+      </app-project-list>
+    </app-project-search-form>
+  </div>
+</div>

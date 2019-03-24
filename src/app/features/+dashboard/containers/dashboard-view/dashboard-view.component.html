@@ -15,19 +15,23 @@
     <mat-sidenav #drawer [mode]="mobileQuery.matches ? 'push' : 'side'" class="dashboard-sidebar">
         <app-expansion-menu title="Sea" [opened]="router.isActive('/dashboard/sea')">
             <div class="app-expansion-menu-item" app-expansion-menu-item>
-                <button class="menu-btn" routerLink="/dashboard/sea/1d" queryParamsHandling="merge"
-                    [appLinkActive]="['mat-raised-button']">
+                <button class="menu-btn" routerLink="/dashboard/sea/1d" [appLinkActive]="['mat-raised-button']">
                     1D
                 </button>
             </div>
             <div class="app-expansion-menu-item" app-expansion-menu-item>
-                <button class="menu-btn" routerLink="/dashboard/sea/2d" queryParamsHandling="merge"
-                    [appLinkActive]="['mat-raised-button']">
+                <button class="menu-btn" routerLink="/dashboard/sea/2d" [appLinkActive]="['mat-raised-button']">
                     2D
                 </button>
             </div>
         </app-expansion-menu>
-        <app-expansion-menu title="My projects">
+        <app-expansion-menu title="Projects" [opened]="router.isActive('/dashboard/projects')">
+            <div class="app-expansion-menu-item" app-expansion-menu-item>
+                <button class="menu-btn" routerLink="/dashboard/projects" queryParamsHandling="merge"
+                    [appLinkActive]="['mat-raised-button']">
+                    My
+                </button>
+            </div>
         </app-expansion-menu>
     </mat-sidenav>
     <mat-sidenav-content class="dashboard-content">

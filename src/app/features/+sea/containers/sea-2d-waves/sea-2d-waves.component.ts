@@ -5,8 +5,8 @@ import { DEFAULT_SEA_2D_OPTIONS } from '../../constants/sea.constant';
 import { MatDialog } from '@angular/material';
 import { SeaSaveDialogComponent } from '../../components/sea-save-dialog/sea-save-dialog.component';
 import { ISea2D, ISea } from '../../models/sea';
-import { IProject } from '../../models/project';
-import { ProjectService } from '../../services/project/project.service';
+import { ProjectService } from 'src/app/features/+project/services/project.service';
+import { IProject } from 'src/app/features/+project/models/project';
 
 @Component({
     selector: 'app-sea-2d-waves',
