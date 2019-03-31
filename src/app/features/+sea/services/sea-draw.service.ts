@@ -12,9 +12,9 @@ export class SeaDrawService {
     public draw(sea: ISea2D, options: IOptions, canvasData: ImageData): void {
         const ROCK_COLOR = 160; // 0xa0
 
-        for (let r = 0; r < options.N; r++) {
-            for (let c = 0; c < options.N; c++) {
-                let idx = (c + r * options.N) * 4;
+        for (let r = 0; r < options.n; r++) {
+            for (let c = 0; c < options.n; c++) {
+                let idx = (c + r * options.n) * 4;
                 if (!sea.water[r][c].free) {
                     // draw free
                     canvasData.data[idx] = 1;  // red
@@ -38,13 +38,13 @@ export class SeaDrawService {
         }
         // draw oscillators
         for (let o of sea.oscillators) {
-            let idx = (o.column + o.row * options.N) * 4;
+            let idx = (o.column + o.row * options.n) * 4;
             // alpha
             canvasData.data[idx + 3] = 0;
             canvasData.data[idx + 3 + 4] = 0;
             canvasData.data[idx + 3 - 4] = 0;
-            canvasData.data[idx + 3 + (4 * options.N)] = 0;
-            canvasData.data[idx + 3 - (4 * options.N)] = 0;
+            canvasData.data[idx + 3 + (4 * options.n)] = 0;
+            canvasData.data[idx + 3 - (4 * options.n)] = 0;
         }
     }
 
@@ -53,16 +53,16 @@ export class SeaDrawService {
         let c = sea.point.column;
 
         let ctx = context1d;
-        ctx.clearRect(0, 0, options.N, options.N);
+        ctx.clearRect(0, 0, options.n, options.n);
         ctx.strokeStyle = 'gray';
         ctx.lineWidth = 0.1;
-        ctx.strokeRect(0, r, options.N - 1, 0);
-        ctx.strokeRect(c, 0, 0, options.N - 1);
+        ctx.strokeRect(0, r, options.n - 1, 0);
+        ctx.strokeRect(c, 0, 0, options.n - 1);
 
         ctx.lineWidth = 1;
         ctx.strokeStyle = 'red';
         ctx.beginPath();
-        for (let c = 0; c < options.N; c++) {
+        for (let c = 0; c < options.n; c++) {
             let h = sea.water[r][c].x * (2 ** options.kvisRange);
             ctx.moveTo(c, r);
             ctx.lineTo(c, r + 30 * h);
@@ -75,18 +75,18 @@ export class SeaDrawService {
 
         const optz = optionsZ;
 
-        let half = options.N / 2 | 0;
+        let half = options.n / 2 | 0;
         displayParams.camera.position.set(half, half + optz.cameraY, optz.cameraZ);
         displayParams.camera.lookAt(half, half, 0);
 
-        displayParams.light.position.set(optz.lightX, half, options.N);
+        displayParams.light.position.set(optz.lightX, half, options.n);
 
         let v = displayParams.geometry.getAttribute('position').array;
-        let d = options.D;
+        let d = options.d;
         let i = 0;
-        for (let r_ = 0; r_ < options.N - d; r_ += d) {
-            let r = options.N - d - r_;
-            for (let c = 0; c < options.N - d; c += d) {
+        for (let r_ = 0; r_ < options.n - d; r_ += d) {
+            let r = options.n - d - r_;
+            for (let c = 0; c < options.n - d; c += d) {
                 // 1
                 v[i] = c;
                 v[i + 1] = r_;

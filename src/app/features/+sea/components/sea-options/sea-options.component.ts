@@ -9,12 +9,20 @@ import { IOptions } from '../../models/options';
     styleUrls: ['./sea-options.component.css']
 })
 export class SeaOptionsComponent implements OnInit {
-    @Input() public options: IOptions;
+    @Input() public set options(options: IOptions) {
+        this._options = options;
+    }
+
+    public get options(): IOptions {
+        return this._options;
+    }
+
     @Output() public valueChanges: EventEmitter<IOptions> = new EventEmitter<IOptions>();
 
     public form: FormGroup;
     public submitted: boolean = false;
     private _subscriptions: Subscription[] = [];
+    private _options: IOptions;
 
     constructor(
         private _builder: FormBuilder,
@@ -23,17 +31,17 @@ export class SeaOptionsComponent implements OnInit {
 
     public ngOnInit(): void {
         this.form = this._builder.group({
-            D: new FormControl(this.options.D, [Validators.required]),
-            N: new FormControl({ value: this.options.N, disabled: false }),
-            OMEGA: new FormControl(this.options.OMEGA),
-            W: new FormControl(this.options.W),
-            R: new FormControl(this.options.R),
+            d: new FormControl(this._options.d, [Validators.required]),
+            n: new FormControl({ value: this._options.n, disabled: false }),
+            omega: new FormControl(this._options.omega),
+            w: new FormControl(this._options.w),
+            r: new FormControl(this._options.r),
         });
 
         const valueChangesSubscription = this.form.valueChanges.subscribe((value: IOptions) => {
-            if (value.N % value.D !== 0) {
-                this.form.controls.N.setErrors({ notMultiple: true });
-                this.form.controls.D.setErrors({ notMultiple: true });
+            if (value.n % value.d !== 0) {
+                this.form.controls.n.setErrors({ notMultiple: true });
+                this.form.controls.d.setErrors({ notMultiple: true });
                 return;
             }
             this.valueChanges.emit(value);

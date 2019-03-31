@@ -77,12 +77,12 @@ export class Sea1DOperationsService {
 
     public initSea(options: IOptions): void {
         this.clearSea();
-        for (let c = 0; c < options.N; c++) {
+        for (let c = 0; c < options.n; c++) {
             this._sea.water.push({ x: 0, f: 0, v: 0, free: true });
         }
 
         this._sea.point = { row: 0, column: 0 };
-        this._sea.n = options.N;
+        this._sea.n = options.n;
     }
 
     public clearSea(): void {

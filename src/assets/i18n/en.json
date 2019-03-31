@@ -1,0 +1,15 @@
+{
+    "title": "Waves",
+    "actions": {
+        "actions": "Actions",
+        "edit": "Edit",
+        "deactivate": "Deactivate",
+        "create": "Create new projects"
+    },
+    "tooltips": {
+        "edit_project_tooltip": "To edit project you should select one Active project.",
+        "deactivate_project_tooltip": "To deactivate project you should select at least one Active project."
+    },
+    "active": "Active",
+    "inactive": "Inactive"
+}

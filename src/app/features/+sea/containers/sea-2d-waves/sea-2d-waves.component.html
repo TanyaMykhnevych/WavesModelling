@@ -1,9 +1,12 @@
 <div class="container col-1">
     <app-sea-options [options]="options" (valueChanges)="handleOptionsChanges($event)"></app-sea-options>
     <app-sea-handler [handler]="handler" (valueChanges)="handleHandlerChanges($event)"></app-sea-handler>
-    <app-sea-2d (seaChanges)="handleSeaChanges($event)" [options]="options" [handler]="handler"></app-sea-2d>
+    <app-sea-2d [options]="options" [sea]="sea" [handler]="handler"></app-sea-2d>
     <br />
-    <button mat-raised-button color="accent" (click)="openSavePopup()">Save to my projects</button>
+    <button mat-raised-button color="accent" (click)="openSavePopup()">Save to my projects</button> &nbsp;
+    <button class="action-btn btn" mat-flat-button color="primary" (click)="navigateToProjectsCreation()" *ngIf="sea.id">
+        {{ 'actions.create' | translate }}
+    </button>
 </div>
 <div class="container col-2">
     <app-options-tip></app-options-tip>

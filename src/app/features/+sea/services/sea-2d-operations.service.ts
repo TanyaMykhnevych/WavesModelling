@@ -71,7 +71,7 @@ export class Sea2DOperationsService {
 
         // точки на периметре
         for (let p = 1; p < n - 1; p++) {
-            if (opts.R) {
+            if (opts.r) {
                 // полное отражение от границ
                 this._sea.water[p][0].x = this._sea.water[p][n - 1].x = this._sea.water[0][p].x = this._sea.water[n - 1][p].x = 0;
             } else {
@@ -89,7 +89,7 @@ export class Sea2DOperationsService {
             for (let c = 1; c < n - 1; c++) {
                 // change v
                 this._sea.water[r][c].v += this._sea.water[r][c].f;
-                this._sea.water[r][c].v *= opts.W;
+                this._sea.water[r][c].v *= opts.w;
                 // change x
                 this._sea.water[r][c].x += this._sea.water[r][c].v;
 
@@ -101,38 +101,41 @@ export class Sea2DOperationsService {
                     // this._sea.water[r][c].v = 0;
                     // this._sea.water[r][c].x = (this._sea.water[r-1][c].x + this._sea.water[r+1][c].x + this._sea.water[r][c+1].x + this._sea.water[r][c-1].x) / 4;
 
-                    this._sea.water[r][c].v *= opts.W * opts.W_ROCK;
+                    this._sea.water[r][c].v *= opts.w * opts.W_ROCK;
                     this._sea.water[r][c].x += this._sea.water[r][c].v;
                 }
             }
         }
     }
 
-    public initSea(options: IOptions): void {  
-        this.clearSea();
-        for (let r = 0; r < options.N; r++) {
+    public initSea(options: IOptions): void {
+        this._sea.chronos = -1;
+        this._sea.water = [];
+        for (let r = 0; r < options.n; r++) {
             let row = [];
-            for (let c = 0; c < options.N; c++) {
+            for (let c = 0; c < options.n; c++) {
                 row.push({ x: 0, f: 0, v: 0, free: 1 });
             }
             this._sea.water.push(row);
         }
         this._sea.point = { row: 0, column: 0 };
-        this._sea.n = options.N;
+        this._sea.n = options.n;
     }
 
     public clearSea(): void {
-        this._sea.chronos = -1;
-        this.sea.water = [];
-        this.sea.oscillators = [];
-        this.sea.isles = [];
+        if (this._sea) {
+            this._sea.chronos = -1;
+            this._sea.water = [];
+            this.sea.oscillators = [];
+            this.sea.isles = [];
+        }
     }
 
-    // замер плотности энергии в области {c0, r0, w, h}
+    // замер плотности энергии в области {column, row, w, h}
     public energyDensity(o): any {
         let e = 0, n = 0;
-        for (let r = o.r0; r < o.r0 + o.w; r++) {
-            for (let c = o.c0; c < o.c0 + o.h; c++) {
+        for (let r = o.row; r < o.row + o.width; r++) {
+            for (let c = o.column; c < o.column + o.height; c++) {
                 let dxr = this._sea.water[r][c].x - this._sea.water[r - 1][c].x;
                 let dxc = this._sea.water[r][c].x - this._sea.water[r][c - 1].x;
                 let v = this._sea.water[r][c].v;

@@ -25,7 +25,7 @@ export class Sea1DComponent implements OnInit, OnDestroy{
     public ngOnInit(): void {
         this._seaOperationsService.sea = this.sea;
         this._initSea();
-        this._seaOperationsService.addOscillator(this.options.N / 2, 0.013, 1);
+        this._seaOperationsService.addOscillator(this.options.n / 2, 0.013, 1);
     }
 
     public ngOnDestroy(): void {
@@ -43,7 +43,7 @@ export class Sea1DComponent implements OnInit, OnDestroy{
     public clear(): void {
         this._seaOperationsService.clearSea();
         this._initSea();
-        this.context1d.clearRect(0, 0, this.options.N, this.options.N);
+        this.context1d.clearRect(0, 0, this.options.n, this.options.n);
         this.draw();
     }
 
@@ -71,7 +71,7 @@ export class Sea1DComponent implements OnInit, OnDestroy{
         this.context1d.lineWidth = 1;
         this.context1d.strokeStyle = 'red';
         this.context1d.beginPath();
-        for (let x = 0; x < this.options.N; x++) {
+        for (let x = 0; x < this.options.n; x++) {
             let h = this.sea.water[x].x;
             this.context1d.moveTo(x, y);
             this.context1d.lineTo(x, y + 30 * h);

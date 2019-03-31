@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { SeaModule } from './features/+sea/sea.module';
 import { HomeModule } from './features/+home/home.module';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { DashboardModule } from './features/+dashboard/dashboard.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LoginModule } from './features/+login';
 import { ProjectModule } from './features/+project/project.module';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,13 @@ import { ProjectModule } from './features/+project/project.module';
     HomeModule,
     LoginModule,
     ProjectModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: ((http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json')),
+        deps: [HttpClient],
+      },
+    }),
   ],
   bootstrap: [AppComponent]
 })

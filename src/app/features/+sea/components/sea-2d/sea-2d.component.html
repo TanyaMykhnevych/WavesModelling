@@ -7,10 +7,10 @@
         <label>Kvis</label>
         <mat-slider [(ngModel)]="options.kvisRange" step="1" min="1" max="30"></mat-slider>
         <div class="sea">
-            <canvas #canvas2d id="canvas2d" width="{{options.N}}" height="{{options.N}}"
+            <canvas #canvas2d id="canvas2d" width="{{options.n}}" height="{{options.n}}"
                 (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"
                 (mousemove)="onMouseMove($event)"></canvas>
-            <canvas #canvas1d id="canvas1d" width="{{options.N}}" height="{{options.N}}"
+            <canvas #canvas1d id="canvas1d" width="{{options.n}}" height="{{options.n}}"
                 (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"
                 (mousemove)="onMouseMove($event)"></canvas>
         </div>
@@ -18,7 +18,7 @@
     <div class="col">
         <app-sea3d-options (valueChanges)="handleSettings3DChanges($event)"></app-sea3d-options>
         <div class="sea">
-            <canvas #canvas3d id="canvas3d" width="{{options.N}}" height="{{options.N}}"></canvas>
+            <canvas #canvas3d id="canvas3d" width="{{options.n}}" height="{{options.n}}"></canvas>
         </div>
     </div>
 </div>

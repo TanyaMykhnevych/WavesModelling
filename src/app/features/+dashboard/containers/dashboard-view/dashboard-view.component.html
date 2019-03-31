@@ -5,7 +5,7 @@
         </button>
         <div class="logo">
             <img src="../../../../../assets/images/wave.png" width="35" height="35" alt="Waves">
-            Waves
+            {{'title' | translate}}
         </div>
         <button mat-stroked-button type="button" (click)="logout()">Logout</button>
     </mat-toolbar-row>
@@ -29,7 +29,10 @@
             <div class="app-expansion-menu-item" app-expansion-menu-item>
                 <button class="menu-btn" routerLink="/dashboard/projects" queryParamsHandling="merge"
                     [appLinkActive]="['mat-raised-button']">
-                    My
+                    {{'active' | translate}}
+                </button>
+                <button class="menu-btn" [appLinkActive]="['mat-raised-button']">
+                    {{'inactive' | translate}}
                 </button>
             </div>
         </app-expansion-menu>

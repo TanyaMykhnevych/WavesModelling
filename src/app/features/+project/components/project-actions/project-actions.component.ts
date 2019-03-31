@@ -19,4 +19,16 @@ export class ProjectActionsComponent implements OnInit {
     public navigateToProjectsCreation(): void {
         this._router.navigate(['/dashboard/sea/2d']);
     }
+
+    public isEditDisabled(): boolean {
+        return this.projects.length !== 1;
+    }
+
+    public isDeactivateDisabled(): boolean {
+        return this.projects.length < 1;
+    }
+
+    public editProject(): void {
+        this._router.navigate([`/dashboard/sea/2d/${this.projects[0].id}`]);
+    }
 }

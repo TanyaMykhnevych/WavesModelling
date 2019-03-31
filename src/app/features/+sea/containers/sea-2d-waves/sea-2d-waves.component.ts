@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { IOptions } from '../../models/options';
 import { Handler } from '../../models/handlers.enum';
-import { DEFAULT_SEA_2D_OPTIONS } from '../../constants/sea.constant';
+import { DEFAULT_SEA_2D_OPTIONS, DEFAULT_SEA } from '../../constants/sea.constant';
 import { MatDialog } from '@angular/material';
 import { SeaSaveDialogComponent } from '../../components/sea-save-dialog/sea-save-dialog.component';
 import { ISea2D, ISea } from '../../models/sea';
 import { ProjectService } from 'src/app/features/+project/services/project.service';
 import { IProject } from 'src/app/features/+project/models/project';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-sea-2d-waves',
@@ -17,25 +18,26 @@ export class Sea2DWavesComponent implements OnInit {
 
     public options: IOptions = DEFAULT_SEA_2D_OPTIONS;
     public handler: Handler = Handler.Oscil;
-    public sea: ISea;
+    public sea: ISea = DEFAULT_SEA;
 
     public constructor(
         private _dialog: MatDialog,
-        private _projectService: ProjectService) { }
+        private _projectService: ProjectService,
+        private _route: ActivatedRoute,
+        private _router: Router) { }
 
     public ngOnInit(): void {
+        const project = this._route.snapshot.data.project;
+        this.options = project ? project.options : DEFAULT_SEA_2D_OPTIONS;
+        this.sea = project ? project.sea : DEFAULT_SEA;
     }
 
     public handleOptionsChanges(options: IOptions): void {
-        this.options = options;
+        this.options = { ...this.options, ...options };
     }
 
     public handleHandlerChanges(handler: Handler): void {
         this.handler = handler;
-    }
-
-    public handleSeaChanges(sea: ISea): void {
-        this.sea = sea;
     }
 
     public openSavePopup(): void {
@@ -52,6 +54,10 @@ export class Sea2DWavesComponent implements OnInit {
             this._projectService.create(project).subscribe();
 
         });
+    }
+
+    public navigateToProjectsCreation(): void {
+        this._router.navigate(['/dashboard/sea/2d']);
     }
 
     private _getSeaToPost(): ISea {

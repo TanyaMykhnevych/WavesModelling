@@ -2,6 +2,7 @@ import { Injectable, ElementRef } from '@angular/core';
 import * as THREE from 'three';
 import { IOptions } from '../models/options';
 import { IDisplay3DParameters } from '../models/display-3d-parameters';
+import { IsleType } from '../models/isle-type.enum';
 
 @Injectable()
 export class Sea3DOperationsService {
@@ -9,7 +10,7 @@ export class Sea3DOperationsService {
     constructor() { }
 
     public init3DSea(options: IOptions, displayParams: IDisplay3DParameters, canvas3d: ElementRef): void {
-        displayParams.camera = new THREE.OrthographicCamera(-options.N / 2, options.N / 2, options.N / 2, -options.N / 2, 1, 1000);
+        displayParams.camera = new THREE.OrthographicCamera(-options.n / 2, options.n / 2, options.n / 2, -options.n / 2, 1, 1000);
 
         displayParams.scene = new THREE.Scene();
         displayParams.scene.background = new THREE.Color(0xbfd1e5);
@@ -32,15 +33,15 @@ export class Sea3DOperationsService {
 
         // renderer
         displayParams.renderer = new THREE.WebGLRenderer({ canvas: canvas3d.nativeElement });
-        displayParams.renderer.setSize(options.N, options.N);
+        displayParams.renderer.setSize(options.n, options.n);
         displayParams.renderer.shadowMap.enabled = true;
     }
 
     public initVertices3D(options: IOptions): Float32Array {
-        let d = options.D;
+        let d = options.d;
         let v = [];
-        for (let r = 0; r < options.N - d; r += d) {
-            for (let c = 0; c < options.N - d; c += d) {
+        for (let r = 0; r < options.n - d; r += d) {
+            for (let c = 0; c < options.n - d; c += d) {
                 // 1
                 v.push(c);
                 v.push(r);
@@ -75,19 +76,19 @@ export class Sea3DOperationsService {
         let isleMaterial = new THREE.MeshPhongMaterial({ color: 0x00a000 });
         let mesh = null;
 
-        if (isle.type === 'rect') {
-            let geometry = new THREE.BoxGeometry(isle.w, isle.h, 4);
+        if (isle.type === IsleType.Rectangle) {
+            let geometry = new THREE.BoxGeometry(isle.width, isle.height, 4);
             mesh = new THREE.Mesh(geometry, isleMaterial);
-            mesh.position.x = isle.c0 + isle.w / 2;
-            mesh.position.y = options.N - isle.r0 - isle.h / 2;
+            mesh.position.x = isle.column + isle.width / 2;
+            mesh.position.y = options.n - isle.row - isle.height / 2;
 
-        } else if (isle.type === 'line') {
-            let hypot = Math.hypot(isle.r - isle.r0, isle.c - isle.c0);
+        } else if (isle.type === IsleType.Line) {
+            let hypot = Math.hypot(isle.rowTo - isle.row, isle.columnTo - isle.column);
             let geometry = new THREE.BoxGeometry(hypot, isle.width, 4);
             mesh = new THREE.Mesh(geometry, isleMaterial);
-            mesh.position.x = (isle.c0 + isle.c) / 2;
-            mesh.position.y = options.N - (isle.r0 + isle.r) / 2;
-            let alpha = Math.atan2(isle.r - isle.r0, isle.c - isle.c0);
+            mesh.position.x = (isle.column + isle.columnTo) / 2;
+            mesh.position.y = options.n - (isle.row + isle.rowTo) / 2;
+            let alpha = Math.atan2(isle.rowTo - isle.row, isle.columnTo - isle.column);
             mesh.rotation.z = -alpha;
         }
 
