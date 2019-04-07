@@ -1,0 +1,27 @@
+<div class="confirm-popup" [class.wide]="context?.confirmCheckboxLabel">
+  <header class="confirm-popup-header no-title">
+      <h2>{{ context?.header }}</h2>
+  </header>
+  <div class="confirm-popup-content">
+    <span class="confirm-popup--timer" *ngIf="false">30</span>
+    <div class="confirm-popup--msg" [class.block-mode]="context?.confirmCheckboxLabel">
+      <p>{{context?.title}}</p>
+      <div class="input-checkbox" *ngIf="context?.confirmCheckboxLabel">
+        <mat-checkbox (change)="checkConfirmation()">{{ context?.confirmCheckboxLabel | translate }}</mat-checkbox>
+      </div>
+    </div>
+    <div class="confirm-actions-footer" [ngClass]="context?.footerButtonsClass">
+      <button [mat-dialog-close]="true" cdkFocusInitial [ngClass]="context?.cancelText ? 'btn highlight' : 'btn primary'"
+        appClickStopPropagation [disabled]="context?.confirmCheckboxLabel && !isChecked">
+        {{context?.trueText ? context?.trueText : 'button_yes' | translate}}
+      </button>
+      <button [mat-dialog-close]="false" [ngClass]="context?.cancelText ? 'btn primary' : 'btn highlight'"
+        appClickStopPropagation>
+        {{context?.falseText? context?.falseText : 'button_no' | translate}}
+      </button>
+      <button *ngIf="context?.cancelText" (click)="close()" class="btn highlight" appClickStopPropagation>
+        {{ context?.cancelText }}
+      </button>
+    </div>
+  </div>
+</div>

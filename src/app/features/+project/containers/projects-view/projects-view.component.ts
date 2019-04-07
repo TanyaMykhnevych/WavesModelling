@@ -18,12 +18,17 @@ export class ProjectsViewComponent extends AbstractSearchListView<IProjectSearch
     public projects: ISearchProject[];
     public totalCount: number;
     public selectedProjects: ISearchProject[] = [];
+    private _isActive: boolean = true;
 
     constructor(
         private _projectService: ProjectService,
         protected router: Router,
         protected route: ActivatedRoute) {
         super();
+        this.route.queryParams
+        .subscribe((params: { isActive: boolean }) => {
+            this._isActive = params.isActive;
+        });
     }
 
     public reloadProjects(): void {
@@ -31,6 +36,7 @@ export class ProjectsViewComponent extends AbstractSearchListView<IProjectSearch
     }
 
     public onSearch(searchParameters: IProjectSearchParameter): void {
+        searchParameters.isActive = this._isActive;
         super.onSearch(searchParameters);
     }
 

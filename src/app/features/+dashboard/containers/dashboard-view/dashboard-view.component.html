@@ -3,17 +3,18 @@
         <button type="button" class="burger-btn" [class.active]="drawer.opened" (click)="drawer.toggle()">
             <span></span>
         </button>
-        <div class="logo">
+        <div class="logo" routerLink="/home">
             <img src="../../../../../assets/images/wave.png" width="35" height="35" alt="Waves">
             {{'title' | translate}}
         </div>
-        <button mat-stroked-button type="button" (click)="logout()">Logout</button>
+        <button mat-stroked-button type="button" *ngIf="isAuthenticated" (click)="logout()">{{'logout' | translate}}</button>
+        <button mat-stroked-button type="button" *ngIf="!isAuthenticated" (click)="login()">{{'login' | translate}}</button>
     </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-sidenav-container class="dashboard-view" [hasBackdrop]="false">
     <mat-sidenav #drawer [mode]="mobileQuery.matches ? 'push' : 'side'" class="dashboard-sidebar">
-        <app-expansion-menu title="Sea" [opened]="router.isActive('/dashboard/sea')">
+        <app-expansion-menu title="{{'sea' | translate}}" [opened]="router.isActive('/dashboard/sea')">
             <div class="app-expansion-menu-item" app-expansion-menu-item>
                 <button class="menu-btn" routerLink="/dashboard/sea/1d" [appLinkActive]="['mat-raised-button']">
                     1D
@@ -25,13 +26,16 @@
                 </button>
             </div>
         </app-expansion-menu>
-        <app-expansion-menu title="Projects" [opened]="router.isActive('/dashboard/projects')">
+        <app-expansion-menu title="{{'projects' | translate}}" [opened]="router.isActive('/dashboard/projects')" *ngIf="isAuthenticated">
             <div class="app-expansion-menu-item" app-expansion-menu-item>
                 <button class="menu-btn" routerLink="/dashboard/projects" queryParamsHandling="merge"
-                    [appLinkActive]="['mat-raised-button']">
+                    [queryParams]="{isActive: true}" [appLinkActive]="['mat-raised-button']"
+                    [appLinkActiveOptions]="{ exact: false }">
                     {{'active' | translate}}
                 </button>
-                <button class="menu-btn" [appLinkActive]="['mat-raised-button']">
+                <button class="menu-btn" routerLink="/dashboard/projects" queryParamsHandling="merge"
+                    [queryParams]="{isActive: false}" [appLinkActive]="['mat-raised-button']"
+                    [appLinkActiveOptions]="{ exact: false }">
                     {{'inactive' | translate}}
                 </button>
             </div>

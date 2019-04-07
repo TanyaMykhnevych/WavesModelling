@@ -4,17 +4,17 @@
     <div class="confirm-popup-content">
         <span class="confirm-popup--timer" *ngIf="false">30</span>
         <div class="confirm-popup--msg">
-            <p>Save new project</p>
+            <p>{{'actions.save_new' | translate}}</p>
         </div>
         <mat-form-field>
-            <input matInput [(ngModel)]="name" required placeholder="Name">
-          </mat-form-field>
+            <input matInput [(ngModel)]="name" required placeholder="{{'project.name' | translate}}">
+        </mat-form-field>
         <div class="actions-footer">
             <button mat-raised-button class="save" (click)="save()">
-                Save
+                    {{'actions.save' | translate}}
             </button>
             <button mat-raised-button class="cancel" (click)="close()">
-                Cancel
+                    {{'actions.cancel' | translate}}
             </button>
         </div>
     </div>

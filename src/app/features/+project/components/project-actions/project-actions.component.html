@@ -8,8 +8,13 @@
             {{ 'actions.edit' | translate }}
         </button>
     </div>
+    <div matTooltip="{{'tooltips.activate_project_tooltip' | translate}}" [matTooltipPosition]="'right'">
+        <button class="menu-action" mat-menu-item [disabled]="isActivateDisabled()" (click)="activate()">
+            {{ 'actions.activate' | translate }}
+        </button>
+    </div>
     <div matTooltip="{{'tooltips.deactivate_project_tooltip' | translate}}" [matTooltipPosition]="'right'">
-        <button class="menu-action" mat-menu-item [disabled]="isDeactivateDisabled()">
+        <button class="menu-action" mat-menu-item [disabled]="isDeactivateDisabled()" (click)="deactivate()">
             {{ 'actions.deactivate' | translate }}
         </button>
     </div>

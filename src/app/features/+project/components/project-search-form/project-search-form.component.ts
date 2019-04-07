@@ -17,7 +17,6 @@ export class ProjectSearchFormComponent implements OnInit {
     @Input() public totalCount: number = 0;
     public searchForm: FormGroup;
     @ViewChild(MatPaginator) public paginator: MatPaginator;
-    public modules: number[] = [];
 
     private _searchParameters: IProjectSearchParameter = DEFAULT_SEARCH_PARAMETERS;
 

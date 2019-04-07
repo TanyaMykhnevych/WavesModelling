@@ -1,0 +1,15 @@
+<div class="confirm-popup error">
+  <header class="confirm-popup-header no-title">
+  </header>
+  <div class="confirm-popup-content">
+    <span class="confirm-popup--timer" *ngIf="false">30</span>
+    <div class="confirm-popup--msg">
+      <p>{{ options.message }}</p>
+    </div>
+    <div class="confirm-actions-footer">
+      <button mat-raised-button (click)="close()">
+        {{ options.buttonLabel }}
+      </button>
+    </div>
+  </div>
+</div>

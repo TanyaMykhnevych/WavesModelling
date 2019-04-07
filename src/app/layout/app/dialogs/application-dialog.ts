@@ -1,27 +1,50 @@
 import { MatDialogRef } from '@angular/material';
-import { IApplicationDialog } from './application-dialog.interface';
-import { filter } from 'rxjs/operators';
-import * as keycodes from '@angular/cdk/keycodes';
+import { ESCAPE } from '@angular/cdk/keycodes';
+import { ElementRef } from '@angular/core';
 
-export class ApplicationDialog<T> implements IApplicationDialog<T> {
-    constructor(public dialogRef: MatDialogRef<IApplicationDialog<T>>) {
-        this.dialogRef.keydownEvents()
-            .pipe(filter((event: KeyboardEvent) => event.keyCode === keycodes.ESCAPE))
+export interface IApplicationDialog {
+    close(): void;
+    submit(data: any): void;
+}
+
+export class ApplicationDialog implements IApplicationDialog {
+    public isCLosableByEsc = true;
+    public stopEnterPropagation = true;
+
+    constructor(private _dialogRef: MatDialogRef<IApplicationDialog>) {
+        this._dialogRef.keydownEvents()
             .subscribe((event: KeyboardEvent) => {
-                event.stopPropagation();
-                this.closeByEsc();
+                if (event.keyCode === ESCAPE) {
+                    if (event.keyCode === ESCAPE) {
+                        this.closeByEsc();
+                    }
+                    event.stopPropagation();
+                }
             });
     }
 
-    public closeByEsc(): void {
-        this.close();
+    public closeByEsc() {
+        if (this.isCLosableByEsc) {
+            this.close();
+        }
     }
 
     public close(): void {
-        this.dialogRef.close();
+        this._dialogRef.close();
     }
 
-    public submit(data: T): void {
-        this.dialogRef.close(data);
+    public submit(data: any): void {
+        this._dialogRef.close(data);
+    }
+
+    public focusFirstFormField(hostElement: ElementRef): void {
+        const firstFormElement = this._findInitialFocusFormElement(hostElement);
+        if (firstFormElement) {
+            firstFormElement.focus();
+        }
+    }
+
+    private _findInitialFocusFormElement(hostElement: ElementRef): HTMLElement {
+        return (hostElement.nativeElement as HTMLElement).querySelector('[cdkFocusInitial]');
     }
 }

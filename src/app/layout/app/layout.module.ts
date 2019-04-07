@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material/material.module';
 import { ExpansionMenuModule } from './expansion-menu/expansion-menu.module';
+import { DialogsModule } from './dialogs/dialogs.module';
 
 const MODULES = [
     MaterialModule,
     ExpansionMenuModule,
+    DialogsModule,
 ];
 const COMPONENTS = [];
 

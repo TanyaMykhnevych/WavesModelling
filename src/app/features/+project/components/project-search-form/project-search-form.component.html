@@ -5,7 +5,7 @@
                 <ng-content select="[buttons]"></ng-content>
             </div>
             <mat-form-field class="search-holder">
-                <input matInput type="search" id="searchBox" placeholder="Search by name" formControlName="searchTerm">
+                <input matInput type="search" id="searchBox" placeholder="{{'search_by_name' | translate}}" formControlName="searchTerm">
             </mat-form-field>
         </div>
         <ng-content select=[table]></ng-content>

@@ -1,9 +1,9 @@
 <form [formGroup]="form">
-    <label>&nbsp;Camera
+    <label>&nbsp;{{'camera' | translate}}
         <mat-slider id="cameraRange" formControlName="cameraRange" step="0.01" min="-1.57" max="0" value="0">
         </mat-slider>
     </label>
-    <label>&nbsp;Light
+    <label>&nbsp;{{'light' | translate}}
         <mat-slider id="lightRange" formControlName="lightRange" step="0.1" min="-5" max="5" value="-2"></mat-slider>
     </label>
 </form>

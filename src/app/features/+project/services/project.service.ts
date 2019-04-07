@@ -31,7 +31,11 @@ export class ProjectService {
     }
 
     public update(project: IProject): Observable<IProject> {
-        return this._http.put<IProject>(`${AppSettings.apiHost}/project`, project);
+        return this._http.post<IProject>(`${AppSettings.apiHost}/project`, project);
+    }
+
+    public setIsActive(id: number, isActive: boolean): Observable<IProject> {
+        return this._http.put<IProject>(`${AppSettings.apiHost}/project/${id}`, { isActive: isActive });
     }
 
     public get emptyProject(): IProject {

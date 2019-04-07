@@ -1,0 +1,4 @@
+<div class="login-holder">
+    <span class="logo" (click)="goHome()">{{'title' | translate}} {{'registration' | translate}}</span>
+    <app-register-form (submit)="register($event)"></app-register-form>
+</div>

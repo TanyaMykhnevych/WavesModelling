@@ -1,10 +1,20 @@
 <div class="container col-1">
-    <app-sea-options [options]="options" (valueChanges)="handleOptionsChanges($event)"></app-sea-options>
+    <app-sea-options [options]="project.options" (valueChanges)="handleOptionsChanges($event)"></app-sea-options>
     <app-sea-handler [handler]="handler" (valueChanges)="handleHandlerChanges($event)"></app-sea-handler>
-    <app-sea-2d [options]="options" [sea]="sea" [handler]="handler"></app-sea-2d>
+    <app-sea-2d [options]="project.options" [sea]="sea" [handler]="handler"></app-sea-2d>
+    <div *ngIf="project.id" class="project-name">
+        <mat-form-field>
+            <input matInput placeholder="{{'project.name' | translate}}" [(ngModel)]="project.name" required>
+        </mat-form-field>
+    </div>
     <br />
-    <button mat-raised-button color="accent" (click)="openSavePopup()">Save to my projects</button> &nbsp;
-    <button class="action-btn btn" mat-flat-button color="primary" (click)="navigateToProjectsCreation()" *ngIf="sea.id">
+    <button mat-raised-button color="accent" *ngIf="!project?.id && isAuthenticated"
+        (click)="openSavePopup()">{{'actions.save_new' | translate}}</button>
+    <button mat-raised-button color="accent" *ngIf="project?.id"
+        (click)="saveChanges()">{{'actions.save_changes' | translate}}</button>
+    &nbsp;
+    <button class="action-btn btn" mat-flat-button color="primary" (click)="navigateToProjectsCreation()"
+        *ngIf="sea.id">
         {{ 'actions.create' | translate }}
     </button>
 </div>

@@ -21,6 +21,11 @@ export class ProjectListComponent implements OnInit {
         }
         this._clearSelection();
     }
+
+    public get projects() {
+        return this._projects;
+    }
+
     public dataSource: MatTableDataSource<ISearchProject>;
     public displayedColumns = ['select', 'name', 'createdOn'];
     public selection: SelectionModel<ISearchProject> = new SelectionModel<ISearchProject>(true, []);

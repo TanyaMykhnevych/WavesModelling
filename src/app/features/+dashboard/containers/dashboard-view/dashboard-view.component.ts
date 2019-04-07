@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/core/auth';
 })
 export class DashboardViewComponent implements OnInit, OnDestroy {
     public mobileQuery: MediaQueryList;
-
+    public isAuthenticated: boolean = false;
 
     private _mobileQueryListener: () => void;
 
@@ -19,13 +19,14 @@ export class DashboardViewComponent implements OnInit, OnDestroy {
         private _route: ActivatedRoute,
         private _authService: AuthService,
         changeDetectorRef: ChangeDetectorRef,
-        media: MediaMatcher,) {
+        media: MediaMatcher, ) {
         this.mobileQuery = media.matchMedia('(max-width: 1024px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.mobileQuery.addListener(this._mobileQueryListener);
     }
 
     public ngOnInit(): void {
+        this.isAuthenticated = this._authService.isAuthenticated();
     }
 
     public ngOnDestroy(): void {
@@ -34,6 +35,10 @@ export class DashboardViewComponent implements OnInit, OnDestroy {
 
     public logout(): void {
         this._authService.unauthorize();
+        this.router.navigate(['/home']);
+    }
+
+    public login(): void {
         this.router.navigate(['/login']);
     }
 }

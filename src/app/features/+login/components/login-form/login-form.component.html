@@ -1,11 +1,12 @@
 <mat-card class="auth-form-card">
     <form [formGroup]="form" (submit)="onSubmit($event)">
         <mat-form-field>
-            <input type="email" matInput formControlName="email" placeholder="Email">
+            <input type="email" matInput formControlName="email" placeholder="{{'auth.email' | translate}}">
         </mat-form-field>
         <mat-form-field>
-            <input type="password" matInput formControlName="password" placeholder="Password">
+            <input type="password" matInput formControlName="password" placeholder="{{'auth.password' | translate}}">
         </mat-form-field>
-        <button class="auth-form-card-button" type="submit" color="primary" mat-flat-button>Login</button>
+        <button class="auth-form-card-button" type="submit" color="primary"
+            mat-flat-button>{{'login' | translate}}</button>
     </form>
 </mat-card>

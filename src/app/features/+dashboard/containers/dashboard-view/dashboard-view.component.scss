@@ -12,6 +12,7 @@
     height: 100%;
 }
 .logo{
+    cursor: pointer;
     font-family: $font-family-light;
     @media (max-width: 1024px){
         margin-right: auto;

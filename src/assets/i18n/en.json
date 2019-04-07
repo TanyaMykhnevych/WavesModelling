@@ -3,13 +3,59 @@
     "actions": {
         "actions": "Actions",
         "edit": "Edit",
+        "activate": "Activate",
         "deactivate": "Deactivate",
-        "create": "Create new projects"
+        "create": "Create new projects",
+        "save_new": "Save to my projects",
+        "save_changes": "Save changes",
+        "save": "Save",
+        "cancel": "Cancel"
     },
     "tooltips": {
         "edit_project_tooltip": "To edit project you should select one Active project.",
-        "deactivate_project_tooltip": "To deactivate project you should select at least one Active project."
+        "deactivate_project_tooltip": "To deactivate project you should select at least one Active project.",
+        "activate_project_tooltip": "To activate project you should select at least one Inactive project."
+    },
+    "errors": {
+        "passwords_not_match": "Passwords do not match"
     },
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "registration": "Registration",
+    "start": "Start",
+    "empty_projects": "No projects found",
+    "sea": "Sea",
+    "projects": "Projects",
+    "welcome_to": "Welcome to Waves Modelling!",
+    "auth": {
+        "password": "Password",
+        "email": "Email",
+        "confirm_password": "Confirm password"
+    },
+    "project": {
+        "name": "Name",
+        "creation_date": "Creation Date"
+    },
+    "search_by_name": "Search by name",
+    "handler": {
+        "oscil": "Oscil",
+        "rect": "Rect",
+        "line": "Line",
+        "meter": "Meter"
+    },
+    "energy": "Energy",
+    "camera": "Camera",
+    "light": "Light",
+    "options_tip": {
+        "meaning": "Options meaning",
+        "tip": "Tip",
+        "D": "D - triangle size for 3d display (1,2,3,4,5)",
+        "N": "N - side of the square of the model (must be a multiple of D)",
+        "W": "W - medium absorption coefficient(0.0 <W <= 1.0)",
+        "R": "R - = 1 reflection from the boundaries, = 0 - absorption by boundaries",
+        "OMEGA": "OMEGA - the frequency of the new oscillator (from 0.001 to 0.1)"
+    }
 }

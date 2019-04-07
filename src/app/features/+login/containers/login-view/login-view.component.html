@@ -1,4 +1,4 @@
 <div class="login-holder">
-    <span class="logo">Waves Modelling</span>
+    <span class="logo" (click)="goHome()">{{'title' | translate}} {{'login' | translate}}</span>
     <app-login-form (submit)="login($event)"></app-login-form>
 </div>

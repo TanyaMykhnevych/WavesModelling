@@ -12,7 +12,7 @@ export class LoginViewComponent implements OnInit {
     constructor(private _auth: AuthService, private _router: Router) { }
 
     public ngOnInit(): void {
-        if (this._auth.isAuthenticated) {
+        if (this._auth.isAuthenticated()) {
             this._router.navigate(['/']);
         }
     }
@@ -26,5 +26,9 @@ export class LoginViewComponent implements OnInit {
                     // TODO handle error;
                 }
             });
+    }
+
+    public goHome(): void {
+        this._router.navigate(['/home']);
     }
 }

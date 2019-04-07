@@ -3,4 +3,5 @@ import { ISearchQueryParameter } from 'src/app/core/search/models/search-query-p
 export interface IProjectSearchParameter extends ISearchQueryParameter {
     userId?: number;
     searchTerm?: string;
+    isActive?: boolean;
 }

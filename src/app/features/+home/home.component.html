@@ -1,7 +1,10 @@
 <div class="center">
-    <img src="../../../assets/images/wave.png"/>
+    <img src="../../../assets/images/wave.png" />
     <h1>
-        Welcome to {{ title }}!
+        {{ 'welcome_to' | translate }}
     </h1>
-    <button mat-raised-button color="primary" routerLink="/dashboard/sea/2d">Start</button>
+    <button mat-raised-button color="primary" routerLink="/dashboard/sea/2d">{{'start' | translate}}</button>
+    <br /><br />
+    <button mat-stroked-button routerLink="/login" *ngIf="!isAuthenticated">{{'login' | translate}}</button>
+    <button mat-stroked-button routerLink="/register" *ngIf="!isAuthenticated">{{'register' | translate}}</button>
 </div>
