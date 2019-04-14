@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ISea1D } from '../models/sea';
-import { IOptions } from '../models/options';
 import { IOscillator1D } from '../models/oscillator-1d';
+import { IOptions1D } from '../models/options1D';
 
 @Injectable()
 export class Sea1DOperationsService {
@@ -42,43 +42,59 @@ export class Sea1DOperationsService {
             if (this._sea.water[o.x].free) {
                 // o.next();
                 this._sea.water[o.x].x =
-                    Math.sin(2 * Math.PI * o.omega * this.sea.chronos) * o.amplitude;
+                    Math.sin(o.omega * this._sea.chronos) * o.amplitude;
             }
         }
 
-        // расчет сил
+        // расчет ускорений
         let n = this._sea.n;
+        // крайние точки
+        this._sea.water[0].a = (this._sea.water[1].x - this._sea.water[0].x) * this._sea.water[0].km;
+        this._sea.water[n - 1].a = (this._sea.water[n - 2].x - this._sea.water[n - 1].x) * this._sea.water[n - 1].km;
+        // внутренние точки
         for (let r = 1; r < n - 1; r++) {
-            this._sea.water[r].f = (this._sea.water[r - 1].x + this._sea.water[r + 1].x - this._sea.water[r].x * 2) / 2;
-
+            this._sea.water[r].a = (this._sea.water[r - 1].x + this._sea.water[r + 1].x - this._sea.water[r].x * 2) * this._sea.water[r].km;
         }
-
         // расчет отклонений
 
-        // точки на периметре
-        if (false) {
+        let reflection = 0;
+
+        // крайние точки
+        if (reflection) {
             // полное отражение от границ
             this._sea.water[0].x = this._sea.water[n - 1].x = 0;
         } else {
             // поглощение границами (неполное)
             this._sea.water[0].x = this._sea.water[1].x - this._sea.water[1].v;
             this._sea.water[n - 1].x = this._sea.water[n - 2].x - this._sea.water[n - 2].v;
+            this._sea.water[0].v = 0;
+            this._sea.water[n - 1].v = 0;
         }
 
-        // внутренние точки
+        // все точки
         for (let r = 1; r < n - 1; r++) {
+            if (!this._sea.water[r].free)
+                continue;
             // change v
-            this._sea.water[r].v += this._sea.water[r].f;
-            this._sea.water[r].v *= 1.0;                ///////
+            this._sea.water[r].v += this._sea.water[r].a;
+            // energy dissipation
+            this._sea.water[r].v *= this._sea.water[r].w;
             // change x
             this._sea.water[r].x += this._sea.water[r].v;
         }
     }
 
-    public initSea(options: IOptions): void {
+    public initSea(options: IOptions1D): void {
         this.clearSea();
         for (let c = 0; c < options.n; c++) {
-            this._sea.water.push({ x: 0, f: 0, v: 0, free: true });
+            this._sea.water.push({ free: true, w: options.w, km: options.km, x: 0, a: 0, v: 0, });
+        }
+
+        let w = options.w;
+        for (let i = 0; i < options.merge; i++) {
+            let r = options.n - options.merge + i;
+            w -= 0.001;
+            this._sea.water[r].w = w;
         }
 
         this._sea.point = { row: 0, column: 0 };

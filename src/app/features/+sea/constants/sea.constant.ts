@@ -1,6 +1,7 @@
 import { IOptions } from '../models/options';
 import { IOptions3D } from '../models/options3D';
 import { ISettings3D } from '../models/settings3D';
+import { IOptions1D } from '../models/options1D';
 
 export const DEFAULT_SEA_2D_OPTIONS: IOptions = {
     d: 2,                           // triangle size for 3d visualize
@@ -25,9 +26,12 @@ export const DEFAULT_3D_SETTINGS: ISettings3D = {
     lightRange: 0,
 }
 
-export const DEFAULT_SEA_1D_OPTIONS: IOptions = {
-    n: 200,
+export const DEFAULT_SEA_1D_OPTIONS: IOptions1D = {
+    n: 300,
     w: 1,
+    km: 1,
+    merge: 100,
+    oscilOmega: 0.1,
 }
 
 export const DEFAULT_SEA = {

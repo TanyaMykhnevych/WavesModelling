@@ -18,6 +18,7 @@ import { Sea3DOperationsService } from './services/sea-3d-operations.service';
 import { OptionsTipComponent } from './components/options-tip/options-tip.component';
 import { SeaSaveDialogComponent } from './components/sea-save-dialog/sea-save-dialog.component';
 import { ProjectService } from '../+project/services/project.service';
+import { OptionsTipComponent1D } from './components/options-tip-1d/options-tip-1d.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { ProjectService } from '../+project/services/project.service';
         Sea3DOptionsComponent,
         OptionsTipComponent,
         SeaSaveDialogComponent,
+        OptionsTipComponent1D,
     ],
     entryComponents: [
         SeaSaveDialogComponent,

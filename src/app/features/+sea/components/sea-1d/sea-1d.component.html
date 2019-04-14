@@ -1,9 +1,36 @@
-<div class="container">
+<div class="container col-1">
+    <form [formGroup]="form">
+        <div class="options">
+            <mat-form-field>
+                <input matInput type="number" formControlName="n" class="right" placeholder="N" step="1" />
+                <mat-error *ngIf="form.controls.n.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="number" formControlName="km" class="right" placeholder="Km" step="0.01" />
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="number" formControlName="merge" class="right" placeholder="Merge" step="0.001" />
+                <mat-error *ngIf="form.controls.merge.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="number" formControlName="w" class="right" placeholder="W">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="number" formControlName="oscilOmega" class="right" placeholder="OMEGA" step="0.01" />
+            </mat-form-field>
+        </div>
+    </form>
+    <br />
     <button class="action-btn" mat-raised-button color="warn" title="Clear" (click)="clear()">C</button>
     <button class="action-btn" mat-raised-button color="accent" title="Play/Pause" (click)="play()">
         <mat-icon>{{playPauseIcon}}</mat-icon>
     </button>
+    <span id="info">{{sea?.chronos}}</span>
     <div class="sea">
         <canvas #canvas1dsea id="canvas1" width="{{options.n}}" height="{{options.n}}"></canvas>
     </div>
+</div>
+
+<div class="container col-2">
+    <app-options-tip-1d></app-options-tip-1d>
 </div>

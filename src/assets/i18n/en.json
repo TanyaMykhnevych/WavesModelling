@@ -57,5 +57,14 @@
         "W": "W - medium absorption coefficient(0.0 <W <= 1.0)",
         "R": "R - = 1 reflection from the boundaries, = 0 - absorption by boundaries",
         "OMEGA": "OMEGA - the frequency of the new oscillator (from 0.001 to 0.1)"
+    },
+    "options_tip_1d": {
+        "meaning": "Options meaning",
+        "tip": "Tip",
+        "N": "N - side of the square of the model",
+        "W": "W - medium absorption coefficient(0.0 <W <= 1.0)",
+        "Merge": "Merge - attenuation boundary",
+        "Km": "Km - modulus of elasticity / mass of a node (from 0.1 to 1)",
+        "OMEGA": "OMEGA - the frequency of the oscillator"
     }
 }

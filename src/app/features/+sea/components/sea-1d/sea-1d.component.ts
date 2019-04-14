@@ -1,7 +1,10 @@
-import { Component, ViewChild, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { ISea1D } from '../../models/sea';
 import { DEFAULT_SEA, DEFAULT_SEA_1D_OPTIONS } from '../../constants/sea.constant';
 import { Sea1DOperationsService } from '../../services/sea-1d-operations.service';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { IOptions1D } from '../../models/options1D';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -9,7 +12,7 @@ import { Sea1DOperationsService } from '../../services/sea-1d-operations.service
     templateUrl: './sea-1d.component.html',
     styleUrls: ['./sea-1d.component.scss']
 })
-export class Sea1DComponent implements OnInit, OnDestroy{
+export class Sea1DComponent implements OnInit, OnDestroy {
     @ViewChild('canvas1dsea') canvas1d: ElementRef;
     public context: CanvasRenderingContext2D;
     public canvasData: ImageData;
@@ -17,19 +20,27 @@ export class Sea1DComponent implements OnInit, OnDestroy{
     public timerId;
     public playPauseIcon: string = 'play_arrow';
     public options = DEFAULT_SEA_1D_OPTIONS;
+    public form: FormGroup;
+    private _valueChangesSubscription: Subscription;
 
     public constructor(
-        private _seaOperationsService: Sea1DOperationsService
+        private _seaOperationsService: Sea1DOperationsService,
+        private _builder: FormBuilder,
     ) { }
 
     public ngOnInit(): void {
         this._seaOperationsService.sea = this.sea;
         this._initSea();
-        this._seaOperationsService.addOscillator(this.options.n / 2, 0.013, 1);
+        this._seaOperationsService.addOscillator(0, this.options.oscilOmega, 1);
+        this._buildForm();
+        this._createValueChangesSubscription();
     }
 
     public ngOnDestroy(): void {
         this._stop();
+        if (this._valueChangesSubscription) {
+            this._valueChangesSubscription.unsubscribe();
+        }
     }
 
     public get context1d(): CanvasRenderingContext2D {
@@ -41,9 +52,12 @@ export class Sea1DComponent implements OnInit, OnDestroy{
     }
 
     public clear(): void {
+        clearInterval(this.timerId);
+        this.timerId = 0;
+        this.playPauseIcon = 'play_arrow';
         this._seaOperationsService.clearSea();
         this._initSea();
-        this.context1d.clearRect(0, 0, this.options.n, this.options.n);
+        this._seaOperationsService.addOscillator(0, this.options.oscilOmega, 1);
         this.draw();
     }
 
@@ -60,23 +74,51 @@ export class Sea1DComponent implements OnInit, OnDestroy{
     }
 
     public draw(): void {
-        let y = this.sea.n / 2 | 0;
+        const V_SCALE = 30;
+        let n05 = this.sea.n / 2 | 0;
 
-        this.context1d.clearRect(0, 0, this.sea.n, this.sea.n);
-        this.context1d.strokeStyle = 'gray';
-        this.context1d.lineWidth = 0.5;
-        this.context1d.strokeRect(0, y, this.sea.n - 1, 0);
-        this.context1d.strokeRect(y, 0, 0, this.sea.n - 1);
+        let ctx = this.context1d;
+        ctx.clearRect(0, 0, this.sea.n, this.sea.n);
+        ctx.strokeStyle = 'gray';
+        ctx.lineWidth = 0.5;
+        ctx.setLineDash([1, 1]);
 
-        this.context1d.lineWidth = 1;
-        this.context1d.strokeStyle = 'red';
-        this.context1d.beginPath();
-        for (let x = 0; x < this.options.n; x++) {
-            let h = this.sea.water[x].x;
-            this.context1d.moveTo(x, y);
-            this.context1d.lineTo(x, y + 30 * h);
+        ctx.beginPath();
+        // Ox axis
+        ctx.moveTo(0, n05); ctx.lineTo(this.sea.n, n05);
+        // merge v. line
+        ctx.moveTo(this.sea.n - this.options.merge, 0);
+        ctx.lineTo(this.sea.n - this.options.merge, this.sea.n);
+        // osc.ampl lines
+        let osc = this.sea.oscillators[0];
+        if (osc) {
+            let h = n05 - osc.amplitude * V_SCALE;
+            ctx.moveTo(0, h); ctx.lineTo(this.sea.n, h);
+            h = n05 + osc.amplitude * V_SCALE;
+            ctx.moveTo(0, h); ctx.lineTo(this.sea.n, h);
         }
-        this.context1d.stroke();
+        ctx.stroke();
+
+        ctx.setLineDash([]);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'red';
+
+        for (let col = 0; col < this.options.n; col += 2) {
+            let h = this.sea.water[col].x;
+            ctx.beginPath();
+            ctx.moveTo(col, n05);
+            ctx.lineTo(col, n05 - V_SCALE * h);
+            ctx.stroke();
+        }
+    }
+
+    public getErrorMessage(): string {
+        if (this.form.controls.n.hasError('invalidArgument') && this.form.controls.merge.hasError('invalidArgument')) {
+            return 'N must be greater than Merge';
+        } else {
+            this.form.controls.n.setErrors(null);
+            this.form.controls.merge.setErrors(null);
+        }
     }
 
     private _initSea(): void {
@@ -87,5 +129,30 @@ export class Sea1DComponent implements OnInit, OnDestroy{
         clearInterval(this.timerId);
         this.timerId = null;
         this.playPauseIcon = 'play_arrow';
+    }
+
+    private _buildForm(): void {
+        this.form = this._builder.group({
+            n: new FormControl(this.options.n, [Validators.required]),
+            km: new FormControl(this.options.km, [Validators.required]),
+            merge: new FormControl(this.options.merge, [Validators.required]),
+            w: new FormControl(this.options.w, [Validators.required]),
+            oscilOmega: new FormControl(this.options.oscilOmega, [Validators.required]),
+        });
+    }
+
+    private _createValueChangesSubscription(): void {
+        this._valueChangesSubscription = this.form.valueChanges.subscribe((value: IOptions1D) => {
+            if (value.n < value.merge) {
+                this.form.controls.n.setErrors({ invalidArgument: true });
+                this.form.controls.merge.setErrors({ invalidArgument: true });
+                return;
+            }
+
+            this.options = value;
+            this.clear();
+            this._seaOperationsService.addOscillator(0, this.options.oscilOmega, 1);
+        });
+
     }
 }
