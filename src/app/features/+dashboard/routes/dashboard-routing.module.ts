@@ -7,7 +7,7 @@ import { SeaSharedResolver } from '../../+sea/services/sea-shared.resolver';
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forRoot(routes),
+        RouterModule.forRoot(routes, { useHash: true }),
     ],
     declarations: [],
     exports: [

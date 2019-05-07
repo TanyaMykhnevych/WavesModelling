@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule.forRoot(routes),
+        RouterModule.forRoot(routes, { useHash: true }),
     ],
 })
 export class HomeRoutingModule { }

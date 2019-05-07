@@ -87,11 +87,11 @@ export class ProjectListComponent implements OnInit {
     }
 
     public openSharedProj(id: number): void {
-        window.open(`${AppSettings.clientHost}/shared/${id}`, "_blank");
+        window.open(`${AppSettings.clientHost}/#/shared/${id}`, "_blank");
     }
 
     public getCopyCode(id: number): string {
-        return `<iframe src="${AppSettings.clientHost}/shared/${id}" frameBorder="NO" style="width:1100px;height:800px;"></iframe>`;
+        return `<iframe src="${AppSettings.clientHost}/#/shared/${id}" frameBorder="NO" style="width:1100px;height:800px;"></iframe>`;
     }
 
     public copyCode(id: number, event: Event): void {
