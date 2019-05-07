@@ -2,6 +2,7 @@
     <app-sea-options [options]="project.options" (valueChanges)="handleOptionsChanges($event)"></app-sea-options>
     <app-sea-handler [handler]="handler" (valueChanges)="handleHandlerChanges($event)"></app-sea-handler>
     <app-sea-2d [options]="project.options" [sea]="sea" [handler]="handler"></app-sea-2d>
+    <app-ruler></app-ruler>
     <div *ngIf="project.id" class="project-name">
         <mat-form-field>
             <input matInput placeholder="{{'project.name' | translate}}" [(ngModel)]="project.name" required>

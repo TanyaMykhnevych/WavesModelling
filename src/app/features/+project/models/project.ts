@@ -8,4 +8,5 @@ export interface IProject {
     options?: IOptions;
     userId?: number;
     isDeleted?: boolean;
+    isShared?: boolean;
 }

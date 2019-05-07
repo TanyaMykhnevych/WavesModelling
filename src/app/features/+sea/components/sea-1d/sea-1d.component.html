@@ -25,10 +25,11 @@
     <button class="action-btn" mat-raised-button color="accent" title="Play/Pause" (click)="play()">
         <mat-icon>{{playPauseIcon}}</mat-icon>
     </button>
-    <span id="info">{{sea?.chronos}}</span>
+    <span id="info">&nbsp;{{'timer'| translate}}: {{sea?.chronos}}</span>
     <div class="sea">
         <canvas #canvas1dsea id="canvas1" width="{{options.n}}" height="{{options.n}}"></canvas>
     </div>
+    <app-ruler></app-ruler>
 </div>
 
 <div class="container col-2">

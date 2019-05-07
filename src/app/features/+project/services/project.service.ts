@@ -26,6 +26,10 @@ export class ProjectService {
         return projectId ? this._http.get<IProject>(`${AppSettings.apiHost}/project/${projectId}`) : of(this.emptyProject);
     }
 
+    public getShared(projectId: number): Observable<IProject> {
+        return projectId ? this._http.get<IProject>(`${AppSettings.apiHost}/project/shared/${projectId}`) : of(this.emptyProject);
+    }
+
     public create(project: IProject): Observable<IProject> {
         return this._http.post<IProject>(`${AppSettings.apiHost}/project`, project);
     }
@@ -36,6 +40,10 @@ export class ProjectService {
 
     public setIsActive(id: number, isActive: boolean): Observable<IProject> {
         return this._http.put<IProject>(`${AppSettings.apiHost}/project/${id}`, { isActive: isActive });
+    }
+
+    public share(id: number, isShared: boolean): Observable<IProject> {
+        return this._http.patch<IProject>(`${AppSettings.apiHost}/project/${id}`, { isShared: isShared });
     }
 
     public get emptyProject(): IProject {

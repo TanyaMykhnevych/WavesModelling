@@ -3,6 +3,7 @@
     <button class="action-btn" mat-raised-button color="accent" title="Play/Pause" (click)="play()">
         <mat-icon>{{playPauseIcon}}</mat-icon>
     </button>
+    <span id="info">&nbsp;{{'timer'| translate}}: {{sea?.chronos}}</span>
     <div class="col">
         <label>Kvis</label>
         <mat-slider [(ngModel)]="options.kvisRange" step="1" min="1" max="30"></mat-slider>

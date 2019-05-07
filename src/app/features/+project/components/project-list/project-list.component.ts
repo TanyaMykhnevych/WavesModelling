@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material';
 import { ISearchProject } from '../../models/search-project';
-import { ProjectService } from '../../services/project.service';
+import { AppSettings } from 'src/app/core/settings';
 
 @Component({
     selector: 'app-project-list',
@@ -27,14 +27,14 @@ export class ProjectListComponent implements OnInit {
     }
 
     public dataSource: MatTableDataSource<ISearchProject>;
-    public displayedColumns = ['select', 'name', 'createdOn'];
+    public displayedColumns = ['select', 'name', 'createdOn', 'sharedLink'];
     public selection: SelectionModel<ISearchProject> = new SelectionModel<ISearchProject>(true, []);
     public isLoading: boolean = true;
     @Output() public selectProject: EventEmitter<ISearchProject[]> = new EventEmitter<ISearchProject[]>();
     private _projects: ISearchProject[] = [];
     private _selectedProjects: ISearchProject[] = [];
 
-    constructor(private _projectService: ProjectService) { }
+    constructor() { }
 
     public ngOnInit(): void { }
 
@@ -84,6 +84,31 @@ export class ProjectListComponent implements OnInit {
 
         this._clearSelection();
         this.toggle(row);
+    }
+
+    public openSharedProj(id: number): void {
+        window.open(`${AppSettings.clientHost}/shared/${id}`, "_blank");
+    }
+
+    public getCopyCode(id: number): string {
+        return `<iframe src="${AppSettings.clientHost}/shared/${id}" frameBorder="NO" style="width:1100px;height:800px;"></iframe>`;
+    }
+
+    public copyCode(id: number, event: Event): void {
+        event.preventDefault();
+        event.stopPropagation();
+        const codeToCopy = this.getCopyCode(id);
+        let selBox = document.createElement('textarea');
+        selBox.style.position = 'fixed';
+        selBox.style.left = '0';
+        selBox.style.top = '0';
+        selBox.style.opacity = '0';
+        selBox.value = codeToCopy;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand('copy');
+        document.body.removeChild(selBox);
     }
 
     private _clearSelection(): void {

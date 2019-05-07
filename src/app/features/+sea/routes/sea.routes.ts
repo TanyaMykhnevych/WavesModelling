@@ -13,10 +13,15 @@ export const routes: Route[] = [
             },
             {
                 path: ':id',
-                component: Sea2DWavesComponent,
-                resolve: {
-                    project: SeaResolver,
-                }
+                children: [
+                    {
+                        path: '',
+                        component: Sea2DWavesComponent,
+                        resolve: {
+                            project: SeaResolver,
+                        }
+                    },
+                ]
             },
         ],
     },

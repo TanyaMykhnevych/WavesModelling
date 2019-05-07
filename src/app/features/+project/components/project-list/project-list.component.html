@@ -35,6 +35,18 @@
                 {{project.createdOn | date: 'MM/dd/yyyy hh:mm aa' | lowercase}}</mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="sharedLink">
+            <mat-header-cell *matHeaderCellDef>{{'project.shared_link' | translate}}</mat-header-cell>
+            <mat-cell class="sharedLink-cell" *matCellDef="let project">
+                <div *ngIf="project.isShared">
+                    <button class="action-btn btn" mat-stroked-button
+                        (click)="openSharedProj(project.id)">{{'actions.view'  | translate }}</button>&nbsp;
+                    <button class="action-btn btn" mat-stroked-button [matTooltip]="getCopyCode(project.id)"
+                    (click)="copyCode(project.id, $event)" [matTooltipPosition]="'right'">{{'actions.copy_code'  | translate }}</button>
+                </div>
+            </mat-cell>
+        </ng-container>
+
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
         <mat-row *matRowDef="let row; columns: displayedColumns" (click)="selectSingle(row)"

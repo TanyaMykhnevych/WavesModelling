@@ -19,6 +19,7 @@ import { OptionsTipComponent } from './components/options-tip/options-tip.compon
 import { SeaSaveDialogComponent } from './components/sea-save-dialog/sea-save-dialog.component';
 import { ProjectService } from '../+project/services/project.service';
 import { OptionsTipComponent1D } from './components/options-tip-1d/options-tip-1d.component';
+import { Sea2DWavesSharedComponent } from './containers/sea-2d-waves-shared/sea-2d-waves-shared.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { OptionsTipComponent1D } from './components/options-tip-1d/options-tip-1
         OptionsTipComponent,
         SeaSaveDialogComponent,
         OptionsTipComponent1D,
+        Sea2DWavesSharedComponent,
     ],
     entryComponents: [
         SeaSaveDialogComponent,

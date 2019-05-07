@@ -26,16 +26,30 @@ export class ProjectActionsComponent implements OnInit {
         return this.projects.length !== 1 || this.projects[0].isDeleted;
     }
 
+    public isShareDisabled(): boolean {
+        return this.projects.length !== 1 || this.projects.some(p => p.isDeleted || p.isShared);
+    }
+    
+    public isUnshareDisabled(): boolean {
+        return this.projects.length !== 1 || this.projects.some(p => p.isDeleted || !p.isShared);
+    }
+
     public isDeactivateDisabled(): boolean {
-        return this.projects.length !== 1  || this.projects.some(p => p.isDeleted);
+        return this.projects.length !== 1 || this.projects.some(p => p.isDeleted);
     }
 
     public isActivateDisabled(): boolean {
-        return this.projects.length !== 1  || this.projects.some(p => !p.isDeleted);
+        return this.projects.length !== 1 || this.projects.some(p => !p.isDeleted);
     }
 
     public editProject(): void {
         this._router.navigate([`/dashboard/sea/2d/${this.projects[0].id}`]);
+    }
+
+    public shareProject(isShared: boolean): void {
+        this._projectService.share(this.projects[0].id, isShared).subscribe(_ => {
+            this.reload.emit();
+        });
     }
 
     public deactivate(): void {

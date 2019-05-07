@@ -1,0 +1,11 @@
+<div *ngIf="project.id">
+    <div class="container col-1">
+        <h2>{{project.name}}</h2>
+        <app-sea-2d [options]="project.options" [sea]="sea" [handler]="handler"></app-sea-2d>
+        <app-ruler></app-ruler>
+    </div>
+</div>
+<div *ngIf="!project.id" class="center">
+    <img src="../../../../../assets/images/wave.png" />
+    <h2>{{'errors.view_not_shared_proj'  | translate }}</h2>
+</div>

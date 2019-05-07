@@ -31,12 +31,14 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatStepperModule,
-    MatFormFieldModule,
+    MatFormFieldModule, 
 } from '@angular/material';
 
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { ObserversModule } from '@angular/cdk/observers';
 import { CdkTreeModule } from '@angular/cdk/tree';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 const MATERIAL_MODULES = [
     MatAutocompleteModule,
@@ -73,7 +75,8 @@ const MATERIAL_MODULES = [
     ScrollDispatchModule,
     MatFormFieldModule,
     ObserversModule,
-    CdkTreeModule,
+    CdkTreeModule,       
+    DragDropModule,
 ];
 
 @NgModule({

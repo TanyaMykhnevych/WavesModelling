@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { routes } from './dashboard.routes';
+import { SeaSharedResolver } from '../../+sea/services/sea-shared.resolver';
 
 @NgModule({
     imports: [
@@ -12,5 +13,6 @@ import { routes } from './dashboard.routes';
     exports: [
         RouterModule,
     ],
+    providers: [SeaSharedResolver]
 })
 export class DashboardRoutingModule { }

@@ -8,6 +8,18 @@
             {{ 'actions.edit' | translate }}
         </button>
     </div>
+    <hr />
+    <div matTooltip="{{'tooltips.share_project_tooltip' | translate}}" [matTooltipPosition]="'right'">
+        <button class="menu-action tooltip" mat-menu-item [disabled]="isShareDisabled()" (click)="shareProject(true)">
+            {{ 'actions.share' | translate }}
+        </button>
+    </div>
+    <div matTooltip="{{'tooltips.unshare_project_tooltip' | translate}}" [matTooltipPosition]="'right'">
+        <button class="menu-action tooltip" mat-menu-item [disabled]="isUnshareDisabled()" (click)="shareProject(false)">
+            {{ 'actions.unshare' | translate }}
+        </button>
+    </div>
+    <hr />
     <div matTooltip="{{'tooltips.activate_project_tooltip' | translate}}" [matTooltipPosition]="'right'">
         <button class="menu-action" mat-menu-item [disabled]="isActivateDisabled()" (click)="activate()">
             {{ 'actions.activate' | translate }}
