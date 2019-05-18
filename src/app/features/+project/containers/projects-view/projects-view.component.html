@@ -4,6 +4,7 @@
       [searchParameters]="searchParameters">
       <app-project-actions buttons [projects]="selectedProjects" (reload)="reloadProjects()">
       </app-project-actions>
+      <h6 total> {{'found' | translate }}: {{totalCount}}</h6>
       <app-project-list table (selectProject)="updateSelectedProjects($event)" [projects]="projects">
       </app-project-list>
     </app-project-search-form>

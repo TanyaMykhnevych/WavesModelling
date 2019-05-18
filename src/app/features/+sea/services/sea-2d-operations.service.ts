@@ -54,11 +54,11 @@ export class Sea2DOperationsService {
             if (this._sea.water[o.row][o.column].free) {
                 // o.next();
                 this._sea.water[o.row][o.column].x =
-                    Math.sin(2 * Math.PI * o.omega * this.sea.chronos) * o.amplitude;
+                    Math.sin(2 * Math.PI * opts.omega * this.sea.chronos) * o.amplitude;
             }
         }
 
-        // расчет сил
+        // force calculation
         let n = this._sea.n;
         for (let r = 1; r < n - 1; r++) {
             for (let c = 1; c < n - 1; c++) {
@@ -67,15 +67,15 @@ export class Sea2DOperationsService {
             }
         }
 
-        // расчет отклонений
+        // deviation calculation
 
-        // точки на периметре
+        // points on the perimeter
         for (let p = 1; p < n - 1; p++) {
             if (opts.r) {
-                // полное отражение от границ
+                // full reflection from borders
                 this._sea.water[p][0].x = this._sea.water[p][n - 1].x = this._sea.water[0][p].x = this._sea.water[n - 1][p].x = 0;
             } else {
-                // поглощение границами (неполное)
+                // absorption by boundaries (incomplete)
                 this._sea.water[p][0].x = this._sea.water[p][1].x - this._sea.water[p][1].v;
 
                 this._sea.water[p][n - 1].x = this._sea.water[p][n - 2].x - this._sea.water[p][n - 2].v;
@@ -84,7 +84,7 @@ export class Sea2DOperationsService {
             }
         }
 
-        // внутренние точки
+        // interior points
         for (let r = 1; r < n - 1; r++) {
             for (let c = 1; c < n - 1; c++) {
                 // change v

@@ -7,8 +7,19 @@
             <img src="../../../../../assets/images/wave.png" width="35" height="35" alt="Waves">
             {{'title' | translate}}
         </div>
-        <button mat-stroked-button type="button" *ngIf="isAuthenticated" (click)="logout()">{{'logout' | translate}}</button>
-        <button mat-stroked-button type="button" *ngIf="!isAuthenticated" (click)="login()">{{'login' | translate}}</button>
+        <div class="language">
+            <mat-form-field style="font-size: 12px;">
+                <mat-label>{{'language' | translate}}</mat-label>
+                <mat-select (selectionChange)="languageChange($event)" [value]="currentLanguage">
+                    <mat-option  style="font-size: 12px;" [value]="'en'">EN</mat-option>
+                    <mat-option  style="font-size: 12px;" [value]="'ua'">UA</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <button mat-stroked-button type="button" *ngIf="isAuthenticated"
+            (click)="logout()">{{'logout' | translate}}</button>
+        <button mat-stroked-button type="button" *ngIf="!isAuthenticated"
+            (click)="login()">{{'login' | translate}}</button>
     </mat-toolbar-row>
 </mat-toolbar>
 
@@ -26,7 +37,8 @@
                 </button>
             </div>
         </app-expansion-menu>
-        <app-expansion-menu title="{{'projects' | translate}}" [opened]="router.isActive('/dashboard/projects')" *ngIf="isAuthenticated">
+        <app-expansion-menu title="{{'projects' | translate}}" [opened]="router.isActive('/dashboard/projects')"
+            *ngIf="isAuthenticated">
             <div class="app-expansion-menu-item" app-expansion-menu-item>
                 <button class="menu-btn" routerLink="/dashboard/projects" queryParamsHandling="merge"
                     [queryParams]="{isActive: true}" [appLinkActive]="['mat-raised-button']"

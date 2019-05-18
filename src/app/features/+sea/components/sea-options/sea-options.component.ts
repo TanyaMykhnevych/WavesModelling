@@ -59,11 +59,11 @@ export class SeaOptionsComponent implements OnInit {
     }
 
     public getErrorMessage(): string {
-        if (this.form.controls.D.hasError('notMultiple') && this.form.controls.N.hasError('notMultiple')) {
+        if (this.form.controls.d.hasError('notMultiple') && this.form.controls.n.hasError('notMultiple')) {
             return 'N % D must be 0';
         } else {
-            this.form.controls.D.setErrors(null);
-            this.form.controls.N.setErrors(null);
+            this.form.controls.d.setErrors(null);
+            this.form.controls.n.setErrors(null);
         }
     }
 }

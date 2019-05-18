@@ -36,6 +36,7 @@
     "empty_projects": "No projects found",
     "sea": "Sea",
     "timer": "Timer",
+    "found": "Found",
     "projects": "Projects",
     "welcome_to": "Welcome to Waves Modelling!",
     "auth": {
@@ -75,5 +76,6 @@
         "Merge": "Merge - attenuation boundary",
         "Km": "Km - modulus of elasticity / mass of a node (from 0.1 to 1)",
         "OMEGA": "OMEGA - the frequency of the oscillator"
-    }
+    },
+    "language": "Language"
 }
