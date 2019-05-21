@@ -1,10 +1,153 @@
-<div class="center">
-    <img src="../../../assets/images/wave.png" />
-    <h1>
-        {{ 'welcome_to' | translate }}
-    </h1>
-    <button mat-raised-button color="primary" routerLink="/dashboard/sea/2d">{{'start' | translate}}</button>
-    <br /><br />
-    <button mat-stroked-button routerLink="/login" *ngIf="!isAuthenticated">{{'login' | translate}}</button>
-    <button mat-stroked-button routerLink="/register" *ngIf="!isAuthenticated">{{'register' | translate}}</button>
+<app-top-menu></app-top-menu>
+<div id="home-page">
+  <div id="home-page-inner">
+    <div id="ElementsArea">
+      <div class="draggable Text" id="elm_4">
+        <div id="elm_4_text">
+        </div>
+      </div>
+      <div class="draggable Text" id="elm_12">
+        <div id="elm_12_text">
+          <p style="text-align: center;"><strong><span style="font-family:merriweather"><span
+                  style="font-size:33px;">{{ 'landing.what_offer' | translate }}</span></span></strong></p>
+        </div>
+      </div>
+      <div class="draggable Text" id="elm_13">
+        <div id="elm_13_text">
+          <p style="text-align: center;"><strong><span style="font-size:23px"><span
+                  style="font-family:merriweather">{{ 'landing.simulate_propagation' | translate }}</span></span></strong>
+          </p>
+        </div>
+      </div>
+      <div class="draggable Text" id="elm_14">
+        <div id="elm_14_text">
+          <p style="text-align: center;"><strong><span style="font-size:23px"><span
+                  style="font-family:merriweather">{{ 'landing.change_params' | translate }}</span></span></strong></p>
+        </div>
+      </div>
+      <div class="draggable Text" id="elm_15">
+        <div id="elm_15_text">
+          <p style="text-align: center;"><strong><span style="font-size:23px"><span
+                  style="font-family:merriweather">{{ 'landing.save_projects' | translate }}</span></span></strong></p>
+        </div>
+      </div>
+      <div class="draggable Text" id="elm_16">
+        <div id="elm_16_text">
+          <p style="text-align: center;margin-top: 30px;"><span style="font-size:18px;"><span
+                style="font-family:ubuntu">{{ 'landing.visualize' | translate }}</span></span>
+          </p>
+        </div>
+      </div>
+      <div class="draggable Text" id="elm_17">
+        <div id="elm_17_text">
+          <p style="text-align: center;margin-top: 30px;"><span style="font-size:18px;"><span
+                style="font-family:ubuntu">{{ 'landing.change_params_text' | translate }}</span></span>
+          </p>
+        </div>
+      </div>
+      <div class="draggable Text" id="elm_18">
+        <div id="elm_18_text">
+          <p style="text-align: center;margin-top: 30px;"><span style="font-size:18px;"><span
+                style="font-family:ubuntu">{{ 'landing.save_projects_text' | translate }}</span></span>
+          </p>
+        </div>
+      </div>
+      <div class="draggable Image clickable" id="elm_19">
+        <img class="clickable" id="elm_19_image" style="width:100%;height:100%;"
+          src="../../../assets/images/Modelling.png" title="" alt="" />
+      </div>
+      <div class="draggable Image" id="elm_21"><img id="elm_21_image" style="width:100%;height:100%;"
+          src="../../../assets/images/list.png" title="" alt="" /></div>
+      <div class="draggable Text" id="elm_22">
+        <div id="elm_22_text">
+          <p style="text-align: center;"><strong><span style="font-family:merriweather"><span
+                  style="font-size:33px">{{ 'landing.about' | translate }}</span></span></strong></p>
+        </div>
+      </div>
+      <div class="draggable Text" id="elm_23">
+        <div id="elm_23_text">
+          <p style="text-align: center;">
+          </p>
+
+          <p style="text-align: center;"><span style="font-size:18px"><span style="font-family:ubuntu">
+                {{ 'landing.about_text' | translate }}
+              </span></span>
+          </p>
+
+          <p style="text-align: center;"><span style="font-size:18px"><span style="font-family:ubuntu">
+                {{ 'landing.well_for_study' | translate }}
+              </span></span>
+          </p>
+        </div>
+      </div>
+      <div class="draggable Text" id="elm_33">
+        <div id="elm_33_text">
+          <p><span style="color:#FFFFFF"><strong><span style="font-size:21px"><span
+                    style="font-family:merriweather">WavesModelling</span></span></strong></span></p>
+        </div>
+      </div>
+      <div class="draggable section1 Headline" id="elm_34">
+        <h2 id="elm_34_headline"><a target="_blank" class="">Made by
+            WavesModelling corporation, All rights reserved </a></h2>
+      </div>
+      <div class="draggable Image" id="elm_37"><img id="elm_37_image" style="width:100%;height:100%;"
+          src="../../../assets/images/settings.png" title="" alt="" /></div>
+      <div class="draggable Image" id="elm_39"><img id="elm_39_image" style="width:100%;height:100%;"
+          src="../../../assets/images/wave.png" title="" alt="" /></div>
+      <div class="draggable Text" id="elm_40">
+        <div id="elm_40_text">
+          <p><span style="font-size:22px; color: white">{{ 'landing.service' | translate }}</span></p>
+        </div>
+      </div>
+      <div class="draggable section1 Headline" id="elm_41">
+        <h2 id="elm_41_headline" style="color:white;">{{ 'landing.model_with_us' | translate }}</h2>
+      </div>
+      <div class="draggable Image" id="elm_43"><img id="elm_43_image" style="width:100%;height:100%;"
+          src="../../../assets/images/stranger.png" title="" alt="" /></div>
+      <div class="draggable Image" id="elm_44"><img id="elm_44_image" style="width:100%;height:100%;"
+          src="../../../assets/images/authorized.png" title="" alt="" /></div>
+      <div class="draggable Text" id="elm_47">
+        <div id="elm_47_text">
+          <p><span style="font-size:18px">{{ 'landing.use_service' | translate }}</span></p>
+        </div>
+      </div>
+      <div class="draggable Text" id="elm_48">
+        <div id="elm_48_text">
+          <p><span style="font-size:18px">{{ 'landing.authorize' | translate }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="SECTION1">
+      <div class="section-centered"></div>
+    </div>
+    <div class="section" id="SECTION6">
+      <div class="section-centered">
+        <div class="enter-buttons">
+          <button mat-raised-button color="primary" class="start-btn"
+            routerLink="/dashboard/sea/2d">{{'start' | translate}}</button>
+          <br /><br />
+          <button mat-stroked-button routerLink="/login" class="auth-btn"
+            *ngIf="!isAuthenticated">{{'login' | translate}}</button>
+          <button mat-stroked-button routerLink="/register" class="auth-btn"
+            *ngIf="!isAuthenticated">{{'register' | translate}}</button>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="SECTION5">
+      <div class="section-centered"></div>
+    </div>
+    <div class="section" id="SECTION7">
+      <div class="section-centered"></div>
+    </div>
+    <div class="section" id="SECTION4">
+      <div class="section-centered"></div>
+    </div>
+    <div class="section" id="SECTION2">
+      <div class="section-centered"></div>
+    </div>
+    <div style="display:none;">
+      <iframe style="width:0px;height:0px;" name="frmpost" id="frmpost"></iframe>
+    </div>
+  </div>
 </div>

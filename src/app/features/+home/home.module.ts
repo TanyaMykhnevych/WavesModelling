@@ -5,6 +5,7 @@ import { HomeComponent } from './home.component';
 import { LayoutModule } from 'src/app/layout/app/layout.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { RouterModule } from '@angular/router';
+import { DashboardModule } from '../+dashboard/dashboard.module';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
         HomeRoutingModule,
         CoreModule,
         RouterModule,
+        DashboardModule,
     ],
     declarations: [
         HomeComponent,

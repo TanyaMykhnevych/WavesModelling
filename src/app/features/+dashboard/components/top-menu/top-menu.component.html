@@ -1,0 +1,24 @@
+<mat-toolbar color="primary" class="fixed-header" id="wave">
+    <mat-toolbar-row>
+        <button type="button" class="burger-btn">
+            <span></span>
+        </button>
+        <div class="logo" routerLink="/home">
+            <img src="../../../../../assets/images/wave.png" width="35" height="35" alt="Waves">
+            {{'title' | translate}}
+        </div>
+        <div class="language">
+            <mat-form-field style="font-size: 12px;">
+                <mat-label>{{'language' | translate}}</mat-label>
+                <mat-select (selectionChange)="languageChange($event)" [value]="currentLanguage">
+                    <mat-option  style="font-size: 12px;" [value]="'en'">EN</mat-option>
+                    <mat-option  style="font-size: 12px;" [value]="'ua'">UA</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <button mat-stroked-button type="button" *ngIf="isAuthenticated"
+            (click)="logout()">{{'logout' | translate}}</button>
+        <button mat-stroked-button type="button" *ngIf="!isAuthenticated"
+            (click)="login()">{{'login' | translate}}</button>
+    </mat-toolbar-row>
+</mat-toolbar>

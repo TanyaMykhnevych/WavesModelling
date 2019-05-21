@@ -77,5 +77,21 @@
         "Km": "Km - modulus of elasticity / mass of a node (from 0.1 to 1)",
         "OMEGA": "OMEGA - the frequency of the oscillator"
     },
-    "language": "Language"
+    "language": "Language",
+    "landing": {
+        "what_offer": "What we offer?",
+        "simulate_propagation": "Simulate waves propagation",
+        "change_params": "Change parameters of the model",
+        "save_projects": "Save your projects",
+        "visualize": "Visualize the phenomena of absorption, reflection, diffraction and interference",        
+        "change_params_text": "Change the basic parameters of wave propagation and look at the result",
+        "save_projects_text": "Save, share and manipulate your own projects",
+        "about": "About",
+        "about_text": "Software system that allows to simulate the propagation of waves in a closed space and their interaction with barriers, visualize the phenomena of absorption, reflection, diffraction and interference, provides the ability to change the basic parameters of wave propagation, the ability to create projects and store their configuration.",
+        "well_for_study": "It is well suited for studying materials for students in schools and universities.",
+        "service": "Web service for waves modelling in a closed space.",
+        "model_with_us": "Model waves with us!",
+        "use_service": "Use service as unregistered user with access to waves modelling.",
+        "authorize": "Authorize and get an opportunity to save configured model as a project."
+    }
 }

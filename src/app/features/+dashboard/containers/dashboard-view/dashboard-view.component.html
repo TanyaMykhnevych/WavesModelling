@@ -1,30 +1,6 @@
-<mat-toolbar color="primary" class="fixed-header" id="wave">
-    <mat-toolbar-row>
-        <button type="button" class="burger-btn" [class.active]="drawer.opened" (click)="drawer.toggle()">
-            <span></span>
-        </button>
-        <div class="logo" routerLink="/home">
-            <img src="../../../../../assets/images/wave.png" width="35" height="35" alt="Waves">
-            {{'title' | translate}}
-        </div>
-        <div class="language">
-            <mat-form-field style="font-size: 12px;">
-                <mat-label>{{'language' | translate}}</mat-label>
-                <mat-select (selectionChange)="languageChange($event)" [value]="currentLanguage">
-                    <mat-option  style="font-size: 12px;" [value]="'en'">EN</mat-option>
-                    <mat-option  style="font-size: 12px;" [value]="'ua'">UA</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <button mat-stroked-button type="button" *ngIf="isAuthenticated"
-            (click)="logout()">{{'logout' | translate}}</button>
-        <button mat-stroked-button type="button" *ngIf="!isAuthenticated"
-            (click)="login()">{{'login' | translate}}</button>
-    </mat-toolbar-row>
-</mat-toolbar>
-
+<app-top-menu></app-top-menu>
 <mat-sidenav-container class="dashboard-view" [hasBackdrop]="false">
-    <mat-sidenav #drawer [mode]="mobileQuery.matches ? 'push' : 'side'" class="dashboard-sidebar">
+    <mat-sidenav [mode]="mobileQuery.matches ? 'push' : 'side'" class="dashboard-sidebar">
         <app-expansion-menu title="{{'sea' | translate}}" [opened]="router.isActive('/dashboard/sea')">
             <div class="app-expansion-menu-item" app-expansion-menu-item>
                 <button class="menu-btn" routerLink="/dashboard/sea/1d" [appLinkActive]="['mat-raised-button']">

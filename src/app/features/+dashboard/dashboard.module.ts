@@ -5,6 +5,7 @@ import { DashboardViewComponent } from './containers/dashboard-view/dashboard-vi
 import { DashboardRoutingModule } from './routes/dashboard-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { LayoutModule } from 'src/app/layout/app/layout.module';
+import { TopMenuComponent } from './components/top-menu/top-menu.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,10 @@ import { LayoutModule } from 'src/app/layout/app/layout.module';
     CoreModule,
     RouterModule,
   ],
-  declarations: [DashboardViewComponent],
+  exports: [
+    TopMenuComponent,
+  ],
+  declarations: [DashboardViewComponent, TopMenuComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DashboardModule { }
